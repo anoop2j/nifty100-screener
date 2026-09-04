@@ -4,10 +4,6 @@ on:
 
   workflow_dispatch:
 
-  schedule:
-
-    - cron: '30 11 * * 1-5'
-
 jobs:
 
   run-python:
@@ -16,8 +12,9 @@ jobs:
 
     steps:
 
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
+
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -25,17 +22,31 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+
+      - name: Install Dependencies
         run: |
+          pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Nifty Screener
+
+      - name: Run Python Script
         run: |
           python nifty_screener.py
+
+
+      - name: Check Files
+        run: |
+          echo "Current Directory:"
+          pwd
+
+          echo "Files:"
+          ls -la
+
 
       - name: Upload HTML Report
         uses: actions/upload-artifact@v4
 
         with:
-          name: nifty100-report
+          name: nifty100-html-report
           path: nifty100_20day_high.html
+          if-no-files-found: error
