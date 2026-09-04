@@ -1,67 +1,79 @@
 import pandas as pd
 import yfinance as yf
 from datetime import datetime
-
-# -------------------------------------------------------
-# CONFIGURATION
-# -------------------------------------------------------
-
-INDEX_URL = "https://www.niftyindices.com/IndexConstituent/ind_nifty100list.csv"
+import os
+import time
 
 OUTPUT_FILE = "nifty100_20day_high.html"
 
-# -------------------------------------------------------
-# STEP 1 - READ NIFTY 100 STOCK LIST
-# -------------------------------------------------------
+
+# ---------------------------------------------
+# GET NIFTY 100 STOCKS
+# ---------------------------------------------
 
 def get_nifty100_stocks():
 
+    # Official Nifty Indices CSV URL
+    url = "https://www.niftyindices.com/IndexConstituent/ind_nifty100list.csv"
+
     try:
 
-        df = pd.read_csv(INDEX_URL)
+        print("Downloading Nifty 100 stock list...")
 
-        print("Nifty 100 stocks downloaded successfully")
+        df = pd.read_csv(url)
+
+        print("Columns found:")
+        print(df.columns.tolist())
+
+        print(f"Total stocks found: {len(df)}")
 
         return df
 
     except Exception as e:
 
-        print("Error downloading Nifty 100 list:", e)
+        print("ERROR downloading Nifty 100 list:")
+        print(e)
 
         return None
 
 
-# -------------------------------------------------------
-# STEP 2 - GET LAST 20 DAY HIGH
-# -------------------------------------------------------
+# ---------------------------------------------
+# GET STOCK PRICE DATA
+# ---------------------------------------------
 
 def get_stock_data(symbol):
 
     try:
 
-        # NSE stocks in Yahoo Finance require .NS suffix
-        yahoo_symbol = symbol + ".NS"
+        yahoo_symbol = symbol.strip() + ".NS"
 
-        stock = yf.Ticker(yahoo_symbol)
+        print(f"Downloading data for {yahoo_symbol}")
 
-        # Download last 40 calendar days
-        # This ensures approximately 20 trading days
-        df = stock.history(period="1mo")
+        df = yf.download(
+            yahoo_symbol,
+            period="2mo",
+            progress=False,
+            auto_adjust=False
+        )
 
         if df.empty:
 
+            print(f"No data found for {symbol}")
+
             return None
 
-        # Keep last 20 trading days
+        # Last 20 trading days
         df = df.tail(20)
 
-        high_20_day = df["High"].max()
+        high_20_day = float(df["High"].max().iloc[0])
 
-        latest_close = df["Close"].iloc[-1]
+        latest_close = float(df["Close"].iloc[-1].iloc[0])
 
-        latest_high = df["High"].iloc[-1]
+        latest_high = float(df["High"].iloc[-1].iloc[0])
 
-        distance_from_high = (
+        high_date = df["High"].idxmax().iloc[0]
+
+        distance = (
             (latest_close - high_20_day)
             / high_20_day
         ) * 100
@@ -76,267 +88,217 @@ def get_stock_data(symbol):
 
             "Latest Day High": round(latest_high, 2),
 
-            "% From 20 Day High":
-                round(distance_from_high, 2)
+            "High Date": high_date.strftime("%d-%b-%Y"),
+
+            "% From 20 Day High": round(distance, 2)
 
         }
 
     except Exception as e:
 
-        print(f"Error processing {symbol}: {e}")
+        print(f"ERROR processing {symbol}: {e}")
 
         return None
 
 
-# -------------------------------------------------------
-# STEP 3 - PROCESS ALL NIFTY 100 STOCKS
-# -------------------------------------------------------
-
-def process_nifty100():
-
-    nifty_df = get_nifty100_stocks()
-
-    if nifty_df is None:
-
-        return
-
-    results = []
-
-    for index, row in nifty_df.iterrows():
-
-        symbol = row["Symbol"]
-
-        company_name = row.get("Company Name", "")
-
-        print(
-            f"Processing {index + 1} / "
-            f"{len(nifty_df)} : {symbol}"
-        )
-
-        data = get_stock_data(symbol)
-
-        if data:
-
-            data["Company Name"] = company_name
-
-            results.append(data)
-
-    return pd.DataFrame(results)
-
-
-# -------------------------------------------------------
-# STEP 4 - GENERATE HTML REPORT
-# -------------------------------------------------------
+# ---------------------------------------------
+# GENERATE HTML
+# ---------------------------------------------
 
 def generate_html_report(df):
 
-    df = df.sort_values(
-        by="% From 20 Day High",
-        ascending=False
-    )
+    print("Generating HTML report...")
 
     report_date = datetime.now().strftime(
         "%d-%b-%Y %I:%M %p"
     )
 
     html = f"""
+<!DOCTYPE html>
 
-    <!DOCTYPE html>
+<html>
 
-    <html>
+<head>
 
-    <head>
+<title>Nifty 100 - 20 Day High Report</title>
 
-    <title>Nifty 100 - Last 20 Day High Report</title>
+<style>
 
-    <style>
+body {{
+    font-family: Arial;
+    margin: 30px;
+    background-color: #f5f5f5;
+}}
 
-    body {{
+h1 {{
+    color: #003366;
+}}
 
-        font-family: Arial, sans-serif;
+table {{
+    border-collapse: collapse;
+    width: 100%;
+    background: white;
+}}
 
-        background-color: #f4f6f9;
+th {{
+    background: #003366;
+    color: white;
+    padding: 10px;
+}}
 
-        margin: 30px;
+td {{
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}}
 
-    }}
+.near-high {{
+    background-color: #d4edda;
+}}
 
-    h1 {{
+</style>
 
-        color: #1a237e;
+</head>
 
-    }}
+<body>
 
-    .info {{
+<h1>Nifty 100 - Last 20 Trading Day High</h1>
 
-        color: #555;
+<p>
+Report Generated: {report_date}
+</p>
 
-        margin-bottom: 20px;
+<table>
 
-    }}
+<tr>
 
-    table {{
+<th>Symbol</th>
+<th>20 Day High</th>
+<th>Latest Close</th>
+<th>Latest Day High</th>
+<th>High Date</th>
+<th>% From High</th>
 
-        border-collapse: collapse;
+</tr>
+"""
 
-        width: 100%;
-
-        background: white;
-
-    }}
-
-    th {{
-
-        background-color: #1a237e;
-
-        color: white;
-
-        padding: 12px;
-
-        text-align: left;
-
-    }}
-
-    td {{
-
-        padding: 10px;
-
-        border-bottom: 1px solid #ddd;
-
-    }}
-
-    tr:hover {{
-
-        background-color: #f1f1f1;
-
-    }}
-
-    .near-high {{
-
-        background-color: #d4edda;
-
-    }}
-
-    .far-high {{
-
-        background-color: #f8d7da;
-
-    }}
-
-    </style>
-
-    </head>
-
-    <body>
-
-    <h1>Nifty 100 - Last 20 Trading Day High</h1>
-
-    <div class="info">
-
-    Report Generated: {report_date}
-
-    </div>
-
-    """
-
-    html += """
-
-    <table>
-
-    <tr>
-
-        <th>Symbol</th>
-
-        <th>Company Name</th>
-
-        <th>20 Day High</th>
-
-        <th>Latest Close</th>
-
-        <th>Latest Day High</th>
-
-        <th>% From 20 Day High</th>
-
-    </tr>
-
-    """
+    df = df.sort_values(
+        "% From 20 Day High",
+        ascending=False
+    )
 
     for _, row in df.iterrows():
 
-        percentage = row["% From 20 Day High"]
+        css_class = ""
 
-        # Highlight stocks near 20-day high
-
-        if percentage >= -2:
-
-            row_class = "near-high"
-
-        elif percentage <= -10:
-
-            row_class = "far-high"
-
-        else:
-
-            row_class = ""
+        if row["% From 20 Day High"] >= -2:
+            css_class = "near-high"
 
         html += f"""
 
-        <tr class="{row_class}">
+<tr class="{css_class}">
 
-        <td>{row['Symbol']}</td>
+<td>{row['Symbol']}</td>
 
-        <td>{row['Company Name']}</td>
+<td>{row['20 Day High']}</td>
 
-        <td>{row['20 Day High']}</td>
+<td>{row['Latest Close']}</td>
 
-        <td>{row['Latest Close']}</td>
+<td>{row['Latest Day High']}</td>
 
-        <td>{row['Latest Day High']}</td>
+<td>{row['High Date']}</td>
 
-        <td>{row['% From 20 Day High']}%</td>
+<td>{row['% From 20 Day High']}%</td>
 
-        </tr>
+</tr>
 
-        """
+"""
 
     html += """
 
-    </table>
+</table>
 
-    </body>
+</body>
 
-    </html>
+</html>
 
-    """
+"""
 
+    # Write file
     with open(
         OUTPUT_FILE,
         "w",
         encoding="utf-8"
-    ) as file:
+    ) as f:
 
-        file.write(html)
+        f.write(html)
 
-    print(
-        f"\nHTML report generated successfully:"
-        f"\n{OUTPUT_FILE}"
-    )
+    print("=" * 50)
+    print("HTML FILE CREATED SUCCESSFULLY")
+    print("File:", OUTPUT_FILE)
+    print("Full Path:", os.path.abspath(OUTPUT_FILE))
+    print("File Exists:", os.path.exists(OUTPUT_FILE))
+    print("=" * 50)
 
 
-# -------------------------------------------------------
-# MAIN PROGRAM
-# -------------------------------------------------------
+# ---------------------------------------------
+# MAIN
+# ---------------------------------------------
 
-if __name__ == "__main__":
+def main():
 
-    print("Starting Nifty 100 Analysis...")
+    print("=" * 50)
+    print("STARTING NIFTY 100 SCREENER")
+    print("=" * 50)
 
-    result_df = process_nifty100()
+    nifty_df = get_nifty100_stocks()
 
-    if result_df is not None and not result_df.empty:
+    results = []
 
-        generate_html_report(result_df)
+    if nifty_df is not None:
+
+        for index, row in nifty_df.iterrows():
+
+            symbol = str(row["Symbol"]).strip()
+
+            print(
+                f"\nProcessing "
+                f"{index + 1}/{len(nifty_df)} : {symbol}"
+            )
+
+            stock_data = get_stock_data(symbol)
+
+            if stock_data:
+                results.append(stock_data)
+
+            time.sleep(0.2)
+
+    # IMPORTANT:
+    # Generate HTML even if no data is available
+
+    if results:
+
+        result_df = pd.DataFrame(results)
 
     else:
 
-        print("No data generated.")
+        print("WARNING: No stock data received.")
+
+        # Create empty dataframe with required columns
+        result_df = pd.DataFrame(
+            columns=[
+                "Symbol",
+                "20 Day High",
+                "Latest Close",
+                "Latest Day High",
+                "High Date",
+                "% From 20 Day High"
+            ]
+        )
+
+    # ALWAYS CREATE HTML FILE
+    generate_html_report(result_df)
+
+
+if __name__ == "__main__":
+
+    main()
