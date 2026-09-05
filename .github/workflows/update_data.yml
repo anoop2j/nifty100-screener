@@ -1,0 +1,75 @@
+name: Update Nifty 100 Stock Data
+
+on:
+
+  workflow_dispatch:
+
+  schedule:
+
+    # Monday-Friday
+    # 5:30 PM India Time
+    # GitHub uses UTC
+    # 12:00 UTC = 5:30 PM IST
+
+    - cron: "0 12 * * 1-5"
+
+
+permissions:
+  contents: write
+
+
+jobs:
+
+  update-stock-data:
+
+    runs-on: ubuntu-latest
+
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+
+        with:
+
+          python-version: "3.11"
+
+
+      - name: Install Dependencies
+        run: |
+
+          python -m pip install --upgrade pip
+
+          pip install -r requirements.txt
+
+
+      - name: Run Stock Screener
+        run: |
+
+          python nifty_screener.py
+
+
+      - name: Check Generated Data
+        run: |
+
+          ls -lah
+
+          cat data.json | head -20
+
+
+      - name: Commit Updated Data
+        run: |
+
+          git config --global user.name "GitHub Action"
+
+          git config --global user.email "action@github.com"
+
+          git add data.json
+
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update Nifty 100 stock data"
+
+          git push
