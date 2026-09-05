@@ -1,29 +1,22 @@
 import pandas as pd
 import yfinance as yf
-from datetime import datetime
-import os
+import json
 import time
+from datetime import datetime
 
-OUTPUT_FILE = "nifty100_20day_high.html"
 
+OUTPUT_FILE = "data.json"
 
-# ---------------------------------------------
-# GET NIFTY 100 STOCKS
-# ---------------------------------------------
 
 def get_nifty100_stocks():
 
-    # Official Nifty Indices CSV URL
     url = "https://www.niftyindices.com/IndexConstituent/ind_nifty100list.csv"
+
+    print("Downloading Nifty 100 stock list...")
 
     try:
 
-        print("Downloading Nifty 100 stock list...")
-
         df = pd.read_csv(url)
-
-        print("Columns found:")
-        print(df.columns.tolist())
 
         print(f"Total stocks found: {len(df)}")
 
@@ -31,23 +24,18 @@ def get_nifty100_stocks():
 
     except Exception as e:
 
-        print("ERROR downloading Nifty 100 list:")
-        print(e)
+        print("Error downloading Nifty 100 list:", e)
 
         return None
 
 
-# ---------------------------------------------
-# GET STOCK PRICE DATA
-# ---------------------------------------------
-
-def get_stock_data(symbol):
+def get_stock_data(symbol, company_name):
 
     try:
 
         yahoo_symbol = symbol.strip() + ".NS"
 
-        print(f"Downloading data for {yahoo_symbol}")
+        print(f"Processing: {symbol}")
 
         df = yf.download(
             yahoo_symbol,
@@ -58,197 +46,70 @@ def get_stock_data(symbol):
 
         if df.empty:
 
-            print(f"No data found for {symbol}")
-
             return None
 
-        # Last 20 trading days
+        # Last 20 trading sessions
         df = df.tail(20)
 
-        high_20_day = float(df["High"].max().iloc[0])
+        # Handle yfinance multi-index columns
+        high_column = df["High"]
 
-        latest_close = float(df["Close"].iloc[-1].iloc[0])
+        if isinstance(high_column, pd.DataFrame):
+            high_column = high_column.iloc[:, 0]
 
-        latest_high = float(df["High"].iloc[-1].iloc[0])
+        close_column = df["Close"]
 
-        high_date = df["High"].idxmax().iloc[0]
+        if isinstance(close_column, pd.DataFrame):
+            close_column = close_column.iloc[:, 0]
 
-        distance = (
-            (latest_close - high_20_day)
-            / high_20_day
+        high_20 = float(high_column.max())
+
+        latest_close = float(close_column.iloc[-1])
+
+        latest_high = float(high_column.iloc[-1])
+
+        high_date = high_column.idxmax()
+
+        percent_from_high = (
+            (latest_close - high_20)
+            / high_20
         ) * 100
 
         return {
 
-            "Symbol": symbol,
+            "symbol": symbol,
 
-            "20 Day High": round(high_20_day, 2),
+            "company": company_name,
 
-            "Latest Close": round(latest_close, 2),
+            "latest_close": round(latest_close, 2),
 
-            "Latest Day High": round(latest_high, 2),
+            "latest_high": round(latest_high, 2),
 
-            "High Date": high_date.strftime("%d-%b-%Y"),
+            "high_20_day": round(high_20, 2),
 
-            "% From 20 Day High": round(distance, 2)
+            "high_date": high_date.strftime("%d-%b-%Y"),
+
+            "percent_from_high": round(
+                percent_from_high,
+                2
+            )
 
         }
 
     except Exception as e:
 
-        print(f"ERROR processing {symbol}: {e}")
+        print(f"Error processing {symbol}: {e}")
 
         return None
 
 
-# ---------------------------------------------
-# GENERATE HTML
-# ---------------------------------------------
-
-def generate_html_report(df):
-
-    print("Generating HTML report...")
-
-    report_date = datetime.now().strftime(
-        "%d-%b-%Y %I:%M %p"
-    )
-
-    html = f"""
-<!DOCTYPE html>
-
-<html>
-
-<head>
-
-<title>Nifty 100 - 20 Day High Report</title>
-
-<style>
-
-body {{
-    font-family: Arial;
-    margin: 30px;
-    background-color: #f5f5f5;
-}}
-
-h1 {{
-    color: #003366;
-}}
-
-table {{
-    border-collapse: collapse;
-    width: 100%;
-    background: white;
-}}
-
-th {{
-    background: #003366;
-    color: white;
-    padding: 10px;
-}}
-
-td {{
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-}}
-
-.near-high {{
-    background-color: #d4edda;
-}}
-
-</style>
-
-</head>
-
-<body>
-
-<h1>Nifty 100 - Last 20 Trading Day High</h1>
-
-<p>
-Report Generated: {report_date}
-</p>
-
-<table>
-
-<tr>
-
-<th>Symbol</th>
-<th>20 Day High</th>
-<th>Latest Close</th>
-<th>Latest Day High</th>
-<th>High Date</th>
-<th>% From High</th>
-
-</tr>
-"""
-
-    df = df.sort_values(
-        "% From 20 Day High",
-        ascending=False
-    )
-
-    for _, row in df.iterrows():
-
-        css_class = ""
-
-        if row["% From 20 Day High"] >= -2:
-            css_class = "near-high"
-
-        html += f"""
-
-<tr class="{css_class}">
-
-<td>{row['Symbol']}</td>
-
-<td>{row['20 Day High']}</td>
-
-<td>{row['Latest Close']}</td>
-
-<td>{row['Latest Day High']}</td>
-
-<td>{row['High Date']}</td>
-
-<td>{row['% From 20 Day High']}%</td>
-
-</tr>
-
-"""
-
-    html += """
-
-</table>
-
-</body>
-
-</html>
-
-"""
-
-    # Write file
-    with open(
-        OUTPUT_FILE,
-        "w",
-        encoding="utf-8"
-    ) as f:
-
-        f.write(html)
-
-    print("=" * 50)
-    print("HTML FILE CREATED SUCCESSFULLY")
-    print("File:", OUTPUT_FILE)
-    print("Full Path:", os.path.abspath(OUTPUT_FILE))
-    print("File Exists:", os.path.exists(OUTPUT_FILE))
-    print("=" * 50)
-
-
-# ---------------------------------------------
-# MAIN
-# ---------------------------------------------
-
 def main():
 
-    print("=" * 50)
-    print("STARTING NIFTY 100 SCREENER")
-    print("=" * 50)
+    print("=" * 60)
+
+    print("NIFTY 100 SCREENER STARTED")
+
+    print("=" * 60)
 
     nifty_df = get_nifty100_stocks()
 
@@ -260,43 +121,64 @@ def main():
 
             symbol = str(row["Symbol"]).strip()
 
-            print(
-                f"\nProcessing "
-                f"{index + 1}/{len(nifty_df)} : {symbol}"
+            company_name = str(
+                row.get("Company Name", "")
+            ).strip()
+
+            data = get_stock_data(
+                symbol,
+                company_name
             )
 
-            stock_data = get_stock_data(symbol)
+            if data:
 
-            if stock_data:
-                results.append(stock_data)
+                results.append(data)
 
             time.sleep(0.2)
 
-    # IMPORTANT:
-    # Generate HTML even if no data is available
+    # Sort stocks closest to 20-day high
 
-    if results:
+    results = sorted(
+        results,
+        key=lambda x: x["percent_from_high"],
+        reverse=True
+    )
 
-        result_df = pd.DataFrame(results)
+    output = {
 
-    else:
+        "last_updated": datetime.now().strftime(
+            "%d-%b-%Y %I:%M %p"
+        ),
 
-        print("WARNING: No stock data received.")
+        "total_stocks": len(results),
 
-        # Create empty dataframe with required columns
-        result_df = pd.DataFrame(
-            columns=[
-                "Symbol",
-                "20 Day High",
-                "Latest Close",
-                "Latest Day High",
-                "High Date",
-                "% From 20 Day High"
-            ]
+        "stocks": results
+
+    }
+
+    # Always create JSON file
+
+    with open(
+        OUTPUT_FILE,
+        "w",
+        encoding="utf-8"
+    ) as f:
+
+        json.dump(
+            output,
+            f,
+            indent=4
         )
 
-    # ALWAYS CREATE HTML FILE
-    generate_html_report(result_df)
+    print("=" * 60)
+
+    print("DATA FILE CREATED")
+
+    print(f"Total Stocks: {len(results)}")
+
+    print(f"File: {OUTPUT_FILE}")
+
+    print("=" * 60)
 
 
 if __name__ == "__main__":
