@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Nifty 100 Stock Screener</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <header>
+
+        <h1>📈 Nifty 100 Stock Screener</h1>
+
+        <p>
+            Last 20 Trading Day High Analysis
+        </p>
+
+    </header>
+
+
+    <div class="stats">
+
+        <div class="card">
+
+            <span>Total Stocks</span>
+
+            <h2 id="totalStocks">
+                Loading...
+            </h2>
+
+        </div>
+
+
+        <div class="card">
+
+            <span>Last Updated</span>
+
+            <h2 id="lastUpdated">
+                Loading...
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="controls">
+
+        <input
+            type="text"
+            id="searchBox"
+            placeholder="Search stock or company..."
+        >
+
+    </div>
+
+
+    <div class="table-container">
+
+        <table id="stockTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>Symbol</th>
+
+                    <th>Company</th>
+
+                    <th>Latest Close</th>
+
+                    <th>20 Day High</th>
+
+                    <th>High Date</th>
+
+                    <th>% From High</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="stockData">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
