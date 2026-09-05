@@ -5,70 +5,61 @@ import time
 from datetime import datetime
 
 
+SYMBOL_FILE = "nifty100_symbols.csv"
 OUTPUT_FILE = "data.json"
 
 
-def get_nifty100_stocks():
-
-    url = "https://www.niftyindices.com/IndexConstituent/ind_nifty100list.csv"
-
-    print("Downloading Nifty 100 stock list...")
+def get_stock_data(symbol, company):
 
     try:
 
-        df = pd.read_csv(url)
+        yahoo_symbol = symbol.replace("&", "%26") + ".NS"
 
-        print(f"Total stocks found: {len(df)}")
-
-        return df
-
-    except Exception as e:
-
-        print("Error downloading Nifty 100 list:", e)
-
-        return None
-
-
-def get_stock_data(symbol, company_name):
-
-    try:
-
-        yahoo_symbol = symbol.strip() + ".NS"
-
-        print(f"Processing: {symbol}")
+        print(f"Processing {symbol}...")
 
         df = yf.download(
             yahoo_symbol,
             period="2mo",
+            interval="1d",
             progress=False,
             auto_adjust=False
         )
 
         if df.empty:
 
+            print(f"  No data: {symbol}")
+
             return None
 
-        # Last 20 trading sessions
-        df = df.tail(20)
+        # Handle yfinance MultiIndex
+        if isinstance(df.columns, pd.MultiIndex):
 
-        # Handle yfinance multi-index columns
-        high_column = df["High"]
+            high = df["High"].iloc[:, 0]
 
-        if isinstance(high_column, pd.DataFrame):
-            high_column = high_column.iloc[:, 0]
+            close = df["Close"].iloc[:, 0]
 
-        close_column = df["Close"]
+        else:
 
-        if isinstance(close_column, pd.DataFrame):
-            close_column = close_column.iloc[:, 0]
+            high = df["High"]
 
-        high_20 = float(high_column.max())
+            close = df["Close"]
 
-        latest_close = float(close_column.iloc[-1])
+        # Last 20 trading days
+        high = high.tail(20)
 
-        latest_high = float(high_column.iloc[-1])
+        close = close.tail(20)
 
-        high_date = high_column.idxmax()
+        if len(high) == 0:
+
+            return None
+
+        high_20 = float(high.max())
+
+        latest_close = float(close.iloc[-1])
+
+        latest_high = float(high.iloc[-1])
+
+        high_date = high.idxmax()
 
         percent_from_high = (
             (latest_close - high_20)
@@ -79,26 +70,41 @@ def get_stock_data(symbol, company_name):
 
             "symbol": symbol,
 
-            "company": company_name,
+            "company": company,
 
-            "latest_close": round(latest_close, 2),
-
-            "latest_high": round(latest_high, 2),
-
-            "high_20_day": round(high_20, 2),
-
-            "high_date": high_date.strftime("%d-%b-%Y"),
-
-            "percent_from_high": round(
-                percent_from_high,
+            "latest_close": round(
+                latest_close,
                 2
-            )
+            ),
+
+            "latest_high": round(
+                latest_high,
+                2
+            ),
+
+            "high_20_day": round(
+                high_20,
+                2
+            ),
+
+            "high_date":
+                high_date.strftime(
+                    "%d-%b-%Y"
+                ),
+
+            "percent_from_high":
+                round(
+                    percent_from_high,
+                    2
+                )
 
         }
 
     except Exception as e:
 
-        print(f"Error processing {symbol}: {e}")
+        print(
+            f"  ERROR {symbol}: {e}"
+        )
 
         return None
 
@@ -107,56 +113,92 @@ def main():
 
     print("=" * 60)
 
-    print("NIFTY 100 SCREENER STARTED")
+    print("NIFTY 100 SCREENER")
 
     print("=" * 60)
 
-    nifty_df = get_nifty100_stocks()
+
+    # Read our local stock list
+
+    try:
+
+        stocks = pd.read_csv(
+            SYMBOL_FILE
+        )
+
+    except Exception as e:
+
+        print(
+            "ERROR reading symbol file:",
+            e
+        )
+
+        raise
+
+
+    print(
+        f"Stocks to process: {len(stocks)}"
+    )
+
 
     results = []
 
-    if nifty_df is not None:
 
-        for index, row in nifty_df.iterrows():
+    for index, row in stocks.iterrows():
 
-            symbol = str(row["Symbol"]).strip()
+        symbol = str(
+            row["symbol"]
+        ).strip()
 
-            company_name = str(
-                row.get("Company Name", "")
-            ).strip()
+        company = str(
+            row["company"]
+        ).strip()
 
-            data = get_stock_data(
-                symbol,
-                company_name
-            )
 
-            if data:
+        print(
+            f"[{index + 1}/{len(stocks)}] "
+            f"{symbol}"
+        )
 
-                results.append(data)
 
-            time.sleep(0.2)
+        result = get_stock_data(
+            symbol,
+            company
+        )
 
-    # Sort stocks closest to 20-day high
 
-    results = sorted(
-        results,
-        key=lambda x: x["percent_from_high"],
+        if result:
+
+            results.append(result)
+
+
+        time.sleep(0.5)
+
+
+    # Sort by distance from 20-day high
+
+    results.sort(
+        key=lambda x:
+            x["percent_from_high"],
         reverse=True
     )
 
+
     output = {
 
-        "last_updated": datetime.now().strftime(
-            "%d-%b-%Y %I:%M %p"
-        ),
+        "last_updated":
+            datetime.now().strftime(
+                "%d-%b-%Y %I:%M %p"
+            ),
 
-        "total_stocks": len(results),
+        "total_stocks":
+            len(results),
 
-        "stocks": results
+        "stocks":
+            results
 
     }
 
-    # Always create JSON file
 
     with open(
         OUTPUT_FILE,
@@ -170,13 +212,18 @@ def main():
             indent=4
         )
 
+
     print("=" * 60)
 
-    print("DATA FILE CREATED")
+    print(
+        f"Successful stocks: "
+        f"{len(results)}"
+    )
 
-    print(f"Total Stocks: {len(results)}")
-
-    print(f"File: {OUTPUT_FILE}")
+    print(
+        f"Data written to: "
+        f"{OUTPUT_FILE}"
+    )
 
     print("=" * 60)
 
