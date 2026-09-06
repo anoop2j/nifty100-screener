@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -11,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Nifty 100 Stock Screener</title>
+    <title>Nifty 100 Screener</title>
 
     <link
         rel="stylesheet"
@@ -23,97 +22,138 @@
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <header>
+        <h1>Nifty 100 Stock Screener</h1>
 
-        <h1>📈 Nifty 100 Stock Screener</h1>
+        <div class="info">
 
-        <p>
-            Last 20 Trading Day High Analysis
-        </p>
+            <div class="card">
 
-    </header>
+                <div class="label">
+                    Total Stocks
+                </div>
+
+                <div
+                    class="value"
+                    id="totalStocks"
+                >
+                    0
+                </div>
+
+            </div>
 
 
-    <div class="stats">
+            <div class="card">
 
-        <div class="card">
+                <div class="label">
+                    Last Updated
+                </div>
 
-            <span>Total Stocks</span>
+                <div
+                    class="value"
+                    id="updated"
+                >
+                    Loading...
+                </div>
 
-            <h2 id="totalStocks">
-                Loading...
-            </h2>
+            </div>
 
         </div>
 
 
-        <div class="card">
+        <div class="controls">
 
-            <span>Last Updated</span>
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search Stock Code..."
+            >
 
-            <h2 id="lastUpdated">
-                Loading...
-            </h2>
+            <button
+                onclick="sortByAway()"
+            >
+                Sort by 20 Day High Away %
+            </button>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>
+                            Stock Code
+                        </th>
+
+                        <th>
+                            Yesterday Close
+                        </th>
+
+                        <th>
+                            20 Day High
+                        </th>
+
+                        <th>
+                            20 Day High Away %
+                        </th>
+
+                        <th>
+                            Target Met Yes
+                        </th>
+
+                        <th>
+                            Target Met No
+                        </th>
+
+                        <th>
+                            Pending
+                        </th>
+
+                        <th>
+                            Strike Rate
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="stockTableBody"
+                >
+
+                    <tr>
+
+                        <td
+                            colspan="9"
+                            style="text-align:center;"
+                        >
+                            Loading data...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
 
         </div>
 
     </div>
 
 
-    <div class="controls">
-
-        <input
-            type="text"
-            id="searchBox"
-            placeholder="Search stock or company..."
-        >
-
-    </div>
-
-
-    <div class="table-container">
-
-        <table id="stockTable">
-
-    <thead>
-
-        <tr>
-
-            <th>Stock Code</th>
-
-            <th>Stock Name</th>
-
-            <th>Yesterday Close</th>
-
-            <th>20 Day High</th>
-
-            <th>20 Day High Away %</th>
-
-            <th>Target Met Yes</th>
-
-            <th>Target Met No</th>
-
-            <th>Strike Rate</th>
-
-        </tr>
-
-    </thead>
-
-    <tbody id="stockData">
-
-    </tbody>
-
-</table>
-        </table>
-
-    </div>
-
-</div>
-
-
-<script src="script.js"></script>
+    <script
+        src="script.js"
+    ></script>
 
 </body>
 
