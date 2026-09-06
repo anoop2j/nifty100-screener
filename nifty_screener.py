@@ -805,11 +805,13 @@ results.sort(
 output = {
 
 
-    "last_updated":
+   "last_updated":
 
-        datetime.now().strftime(
-            "%d-%b-%Y %I:%M %p"
-        ),
+    datetime.now(
+        ZoneInfo("Asia/Kolkata")
+    ).strftime(
+        "%d-%b-%Y %I:%M %p IST"
+    ),
 
 
     "total_stocks":
