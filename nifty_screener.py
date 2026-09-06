@@ -5,6 +5,11 @@ import time
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
+
+# ============================================================
+# SETTINGS
+# ============================================================
+
 SYMBOL_FILE = "nifty100_symbols.csv"
 OUTPUT_FILE = "data.json"
 
@@ -13,11 +18,17 @@ TARGET_PERCENT = 6
 ANALYSIS_TRADING_DAYS = 252
 
 
-def download_stock_data(symbol):
-    try:
-        yahoo_symbol = symbol + ".NS"
+# ============================================================
+# DOWNLOAD STOCK DATA
+# ============================================================
 
-        print(f"Downloading: {symbol}")
+def download_stock_data(symbol):
+
+    yahoo_symbol = symbol + ".NS"
+
+    print("Downloading:", yahoo_symbol)
+
+    try:
 
         df = yf.download(
             yahoo_symbol,
@@ -28,297 +39,687 @@ def download_stock_data(symbol):
         )
 
         if df.empty:
-            print(f"No data found for {symbol}")
             return None
 
+        # Handle yfinance MultiIndex
         if isinstance(df.columns, pd.MultiIndex):
             df.columns = df.columns.get_level_values(0)
 
-        df = df.dropna(subset=["High", "Low", "Close"])
+        required_columns = ["High", "Low", "Close"]
+
+        for column in required_columns:
+            if column not in df.columns:
+                return None
+
+        df = df.dropna(
+            subset=required_columns
+        ).reset_index()
+
+        # Convert numeric values
+        for column in required_columns:
+            df[column] = pd.to_numeric(
+                df[column],
+                errors="coerce"
+            )
+
+        df = df.dropna(
+            subset=required_columns
+        ).reset_index(drop=True)
+
+        if len(df) < LOOKBACK_DAYS + 1:
+            return None
+
+        df["Date"] = pd.to_datetime(
+            df["Date"]
+        ).dt.date
 
         return df
 
     except Exception as e:
-        print(f"Error downloading {symbol}: {e}")
+
+        print(
+            "Error downloading",
+            symbol,
+            ":",
+            e
+        )
+
         return None
 
 
+# ============================================================
+# CURRENT STOCK VALUES
+# ============================================================
+
 def calculate_current_values(df):
 
-    recent_df = df.tail(LOOKBACK_DAYS)
+    latest_close = float(
+        df["Close"].iloc[-1]
+    )
 
-    high_20_day = recent_df["High"].max()
-    latest_close = df["Close"].iloc[-1]
+    last_20_high = float(
+        df["High"].tail(
+            LOOKBACK_DAYS
+        ).max()
+    )
 
-    away_percent = (
-        (latest_close - high_20_day)
-        / high_20_day
-    ) * 100
+    if last_20_high > 0:
 
-    return {
-        "yesterday_close": round(float(latest_close), 2),
-        "high_20_day": round(float(high_20_day), 2),
-        "away_percent": round(float(away_percent), 2)
-    }
+        away_percent = (
+            (last_20_high - latest_close)
+            / last_20_high
+        ) * 100
+
+    else:
+
+        away_percent = 0
+
+    return (
+        latest_close,
+        last_20_high,
+        away_percent
+    )
 
 
-def is_new_20_day_low(df, index):
+# ============================================================
+# CHECK NEW 20-DAY LOW
+# ============================================================
+
+def is_new_20_day_low(data, index):
 
     if index < LOOKBACK_DAYS:
         return False
 
-    previous_low = df["Low"].iloc[
-        index - LOOKBACK_DAYS:index
-    ].min()
+    previous_20_low = float(
+        data["Low"].iloc[
+            index - LOOKBACK_DAYS:index
+        ].min()
+    )
 
-    current_low = df["Low"].iloc[index]
+    current_low = float(
+        data["Low"].iloc[index]
+    )
 
-    return current_low < previous_low
+    return current_low < previous_20_low
 
+
+# ============================================================
+# ANALYSE BREAKOUT TRANSACTIONS
+# ============================================================
 
 def analyse_breakouts(df):
 
-    target_yes = 0
-    target_no = 0
-    pending = 0
-
-    required_days = ANALYSIS_TRADING_DAYS + LOOKBACK_DAYS
+    required_days = (
+        ANALYSIS_TRADING_DAYS
+        + LOOKBACK_DAYS
+    )
 
     analysis_df = df.tail(
         required_days
     ).copy().reset_index(drop=True)
 
-    if len(analysis_df) <= LOOKBACK_DAYS:
-        return {
-            "target_yes": 0,
-            "target_no": 0,
-            "pending": 0,
-            "strike_rate": 0
-        }
+    transactions = []
 
+    # Start after first 20 days
     i = LOOKBACK_DAYS
+
+    # --------------------------------------------------------
+    # IMPORTANT:
+    #
+    # False = normal breakout scanning
+    #
+    # True = target was achieved and we MUST WAIT
+    #        for a new 20-day low before another breakout.
+    # --------------------------------------------------------
+
+    wait_for_new_low_after_target = False
+
 
     while i < len(analysis_df):
 
-        previous_20_high = analysis_df["High"].iloc[
-            i - LOOKBACK_DAYS:i
-        ].max()
+        # ====================================================
+        # AFTER TARGET ACHIEVED
+        #
+        # DO NOT SEARCH FOR BREAKOUT.
+        #
+        # WAIT FOR NEW 20-DAY LOW.
+        # ====================================================
 
-        current_high = analysis_df["High"].iloc[i]
+        if wait_for_new_low_after_target:
 
-        # Fresh 20-day high breakout
+            if is_new_20_day_low(
+                analysis_df,
+                i
+            ):
+
+                print(
+                    "New 20-day low found after target:",
+                    analysis_df["Date"].iloc[i]
+                )
+
+                # Trading cycle can restart
+                wait_for_new_low_after_target = False
+
+            else:
+
+                i += 1
+                continue
+
+
+        # ====================================================
+        # CALCULATE PREVIOUS 20-DAY HIGH
+        # ====================================================
+
+        previous_20_high = float(
+            analysis_df["High"].iloc[
+                i - LOOKBACK_DAYS:i
+            ].max()
+        )
+
+        current_high = float(
+            analysis_df["High"].iloc[i]
+        )
+
+
+        # ====================================================
+        # FRESH 20-DAY HIGH BREAKOUT
+        # ====================================================
+
         if current_high > previous_20_high:
 
-            breakout_level = previous_20_high
-
-            target_price = breakout_level * (
-                1 + TARGET_PERCENT / 100
+            breakout_date = (
+                analysis_df["Date"].iloc[i]
             )
 
-            breakout_result = None
+            # Entry = previous 20-day high
+            breakout_price = previous_20_high
 
-            # Monitor after breakout
+            # Target = +6%
+            target_price = (
+                breakout_price
+                * (1 + TARGET_PERCENT / 100)
+            )
+
+            result = "PENDING"
+
+            result_date = None
+
+            days_to_result = None
+
+            target_met_yes_date = None
+
+            target_met_no_date = None
+
+
+            # =================================================
+            # CHECK DAYS AFTER BREAKOUT
+            # =================================================
+
             j = i + 1
 
             while j < len(analysis_df):
 
-                future_high = analysis_df["High"].iloc[j]
+                future_date = (
+                    analysis_df["Date"].iloc[j]
+                )
 
-                # SUCCESS:
-                # Price reaches 6% target first
+                future_high = float(
+                    analysis_df["High"].iloc[j]
+                )
+
+
+                # =============================================
+                # TARGET +6% ACHIEVED
+                # =============================================
+
                 if future_high >= target_price:
 
-                    breakout_result = "YES"
+                    result = "TARGET MET YES"
+
+                    result_date = future_date
+
+                    target_met_yes_date = (
+                        future_date
+                    )
+
+                    days_to_result = j - i
+
                     break
 
-                # FAILURE:
-                # New 20-day low happens first
+
+                # =============================================
+                # NEW 20-DAY LOW BEFORE TARGET
+                # =============================================
+
                 if is_new_20_day_low(
                     analysis_df,
                     j
                 ):
 
-                    breakout_result = "NO"
+                    result = "TARGET MET NO"
+
+                    result_date = future_date
+
+                    target_met_no_date = (
+                        future_date
+                    )
+
+                    days_to_result = j - i
+
                     break
+
 
                 j += 1
 
-            # Record result
-            if breakout_result == "YES":
 
-                target_yes += 1
+            # =================================================
+            # SAVE TRANSACTION
+            # =================================================
+
+            transactions.append({
+
+                "Stock Code": symbol_name_from_df(
+                    df
+                ),
+
+                "Breakout Date": breakout_date,
+
+                "Breakout Price": round(
+                    breakout_price,
+                    2
+                ),
+
+                "Target Price": round(
+                    target_price,
+                    2
+                ),
+
+                "Target Met Yes Date":
+                    target_met_yes_date,
+
+                "Target Met No Date":
+                    target_met_no_date,
+
+                "Result":
+                    result,
+
+                "Result Date":
+                    result_date,
+
+                "Days to Result":
+                    days_to_result
+            })
+
+
+            # =================================================
+            # NEW TRADE-CYCLE LOGIC
+            # =================================================
+
+            if result == "TARGET MET YES":
+
+                # Target achieved.
+                #
+                # DO NOT immediately search for another
+                # breakout.
+                #
+                # Wait for a NEW 20-DAY LOW.
+
+                wait_for_new_low_after_target = True
+
                 i = j + 1
 
-            elif breakout_result == "NO":
 
-                target_no += 1
+            elif result == "TARGET MET NO":
+
+                # New 20-day low has already occurred.
+                #
+                # We can start looking for the next breakout
+                # after this day.
+
+                wait_for_new_low_after_target = False
+
                 i = j + 1
+
 
             else:
 
-                pending += 1
+                # Still pending
                 i += 1
+
 
         else:
 
             i += 1
 
-    completed_trades = target_yes + target_no
 
-    if completed_trades > 0:
+    return transactions
+
+
+# ============================================================
+# HELPER
+# ============================================================
+
+def symbol_name_from_code(symbol):
+
+    return symbol
+
+
+def symbol_name_from_df(df):
+
+    return getattr(
+        df,
+        "_symbol_name",
+        ""
+    )
+
+
+# ============================================================
+# PROCESS ONE STOCK
+# ============================================================
+
+def process_stock(symbol):
+
+    df = download_stock_data(
+        symbol
+    )
+
+    if df is None:
+
+        return None, []
+
+
+    # Store symbol name inside dataframe
+    df._symbol_name = symbol
+
+
+    # ========================================================
+    # CURRENT VALUES
+    # ========================================================
+
+    (
+        latest_close,
+        last_20_high,
+        away_percent
+    ) = calculate_current_values(
+        df
+    )
+
+
+    # ========================================================
+    # HISTORICAL TRANSACTIONS
+    # ========================================================
+
+    transactions = analyse_breakouts(
+        df
+    )
+
+
+    # ========================================================
+    # STATISTICS
+    # ========================================================
+
+    target_yes = len([
+        x for x in transactions
+        if x["Result"] == "TARGET MET YES"
+    ])
+
+    target_no = len([
+        x for x in transactions
+        if x["Result"] == "TARGET MET NO"
+    ])
+
+    pending = len([
+        x for x in transactions
+        if x["Result"] == "PENDING"
+    ])
+
+
+    completed = (
+        target_yes
+        + target_no
+    )
+
+
+    if completed > 0:
 
         strike_rate = (
-            target_yes / completed_trades
+            target_yes
+            / completed
         ) * 100
 
     else:
 
         strike_rate = 0
 
-    return {
-        "target_yes": target_yes,
-        "target_no": target_no,
-        "pending": pending,
-        "strike_rate": round(strike_rate, 2)
+
+    # ========================================================
+    # SUMMARY
+    # ========================================================
+
+    summary = {
+
+        "Stock Code":
+            symbol,
+
+        "Yesterday Close":
+            round(
+                latest_close,
+                2
+            ),
+
+        "20 Day High":
+            round(
+                last_20_high,
+                2
+            ),
+
+        "20 Day High Away %":
+            round(
+                away_percent,
+                2
+            ),
+
+        "Target Met Yes":
+            target_yes,
+
+        "Target Met No":
+            target_no,
+
+        "Pending":
+            pending,
+
+        "Strike Rate":
+            round(
+                strike_rate,
+                2
+            )
     }
 
 
-def process_stock(symbol, company):
+    return summary, transactions
 
-    try:
 
-        df = download_stock_data(symbol)
-
-        if df is None:
-            return None
-
-        minimum_required = (
-            ANALYSIS_TRADING_DAYS + LOOKBACK_DAYS
-        )
-
-        if len(df) < minimum_required:
-
-            print(f"Insufficient data: {symbol}")
-            return None
-
-        current_data = calculate_current_values(df)
-
-        breakout_data = analyse_breakouts(df)
-
-        return {
-            "symbol": symbol,
-            "company": company,
-            "yesterday_close": current_data["yesterday_close"],
-            "high_20_day": current_data["high_20_day"],
-            "away_percent": current_data["away_percent"],
-            "target_yes": breakout_data["target_yes"],
-            "target_no": breakout_data["target_no"],
-            "pending": breakout_data["pending"],
-            "strike_rate": breakout_data["strike_rate"]
-        }
-
-    except Exception as e:
-
-        print(f"Error processing {symbol}: {e}")
-        return None
-
+# ============================================================
+# MAIN PROGRAM
+# ============================================================
 
 def main():
 
-    print("=" * 60)
-    print("NIFTY 100 BREAKOUT SCREENER")
-    print("=" * 60)
+    print()
+    print("=" * 70)
+    print("NIFTY 100 SCREENER")
+    print("=" * 70)
+    print()
+
+
+    # ========================================================
+    # READ SYMBOL FILE
+    # ========================================================
 
     try:
 
-        stocks = pd.read_csv(SYMBOL_FILE)
+        symbols_df = pd.read_csv(
+            SYMBOL_FILE
+        )
 
     except Exception as e:
 
-        print(f"Error reading stock file: {e}")
+        print(
+            "Unable to read",
+            SYMBOL_FILE,
+            ":",
+            e
+        )
+
         return
 
-    print(f"Total stocks: {len(stocks)}")
 
-    results = []
+    # Find stock-code column
+    possible_columns = [
+        "Stock Code",
+        "Symbol",
+        "SYMBOL",
+        "symbol"
+    ]
 
-    for index, row in stocks.iterrows():
+    symbol_column = None
 
-        symbol = str(row["symbol"]).strip()
-        company = str(row["company"]).strip()
+    for column in possible_columns:
+
+        if column in symbols_df.columns:
+
+            symbol_column = column
+            break
+
+
+    if symbol_column is None:
 
         print(
-            f"[{index + 1}/{len(stocks)}] {symbol}"
+            "ERROR: CSV must contain a Stock Code or Symbol column."
         )
 
-        result = process_stock(
-            symbol,
-            company
-        )
+        return
 
-        if result is not None:
 
-            results.append(result)
-
-            print(
-                f"  Close: {result['yesterday_close']}"
-            )
-
-            print(
-                f"  20D High: {result['high_20_day']}"
-            )
-
-            print(
-                f"  Away: {result['away_percent']}%"
-            )
-
-            print(
-                f"  Target Yes: {result['target_yes']}"
-            )
-
-            print(
-                f"  Target No: {result['target_no']}"
-            )
-
-            print(
-                f"  Strike Rate: {result['strike_rate']}%"
-            )
-
-        time.sleep(0.3)
-
-    # Sort by strike rate, then target yes
-    results.sort(
-        key=lambda x: (
-            x["strike_rate"],
-            x["target_yes"]
-        ),
-        reverse=True
+    symbols = (
+        symbols_df[symbol_column]
+        .dropna()
+        .astype(str)
+        .str.strip()
+        .tolist()
     )
 
-    # Indian Standard Time
-    ist_time = datetime.now(
+
+    print(
+        "Stocks found:",
+        len(symbols)
+    )
+
+    print()
+
+
+    # ========================================================
+    # PROCESS STOCKS
+    # ========================================================
+
+    summary_results = []
+
+    all_transactions = []
+
+
+    for count, symbol in enumerate(
+        symbols,
+        start=1
+    ):
+
+        print(
+            "[",
+            count,
+            "/",
+            len(symbols),
+            "] Processing",
+            symbol
+        )
+
+
+        try:
+
+            summary, transactions = (
+                process_stock(symbol)
+            )
+
+
+            if summary is not None:
+
+                summary_results.append(
+                    summary
+                )
+
+
+                for transaction in transactions:
+
+                    transaction[
+                        "Stock Code"
+                    ] = symbol
+
+                    all_transactions.append(
+                        transaction
+                    )
+
+
+        except Exception as e:
+
+            print(
+                "Error processing",
+                symbol,
+                ":",
+                e
+            )
+
+
+        # Small delay to reduce Yahoo Finance rate-limit risk
+        time.sleep(0.5)
+
+
+    # ========================================================
+    # SORT SUMMARY
+    #
+    # 20 Day High Away % - MOST NEAR FIRST
+    #
+    # Example:
+    # 0.50%
+    # 1.20%
+    # 2.10%
+    # 3.50%
+    # ...
+    # ========================================================
+
+    summary_results = sorted(
+        summary_results,
+        key=lambda x: x[
+            "20 Day High Away %"
+        ]
+    )
+
+
+    # ========================================================
+    # CREATE DATA.JSON
+    # ========================================================
+
+    ist_now = datetime.now(
         ZoneInfo("Asia/Kolkata")
     )
 
-    last_updated = ist_time.strftime(
-        "%d-%b-%Y %I:%M %p IST"
-    )
 
-    output = {
-        "last_updated": last_updated,
-        "total_stocks": len(results),
+    output_data = {
 
-        "strategy": {
-            "analysis_period": "Last 1 year",
-            "breakout": "Fresh 20-day high",
-            "target": "6% gain from breakout level",
-            "target_yes": "6% target achieved before new 20-day low",
-            "target_no": "New 20-day low before 6% target",
-            "strike_rate_formula": "Target Yes / (Target Yes + Target No) * 100"
-        },
+        "updated": ist_now.strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
 
-        "stocks": results
+        "stocks": summary_results
     }
+
 
     try:
 
@@ -326,27 +727,67 @@ def main():
             OUTPUT_FILE,
             "w",
             encoding="utf-8"
-        ) as file:
+        ) as f:
 
             json.dump(
-                output,
-                file,
-                indent=4,
-                ensure_ascii=False
+                output_data,
+                f,
+                indent=2
             )
 
+
         print()
-        print("=" * 60)
-        print("PROCESS COMPLETED")
-        print("=" * 60)
-        print(f"Stocks processed: {len(results)}")
-        print(f"Last updated: {last_updated}")
-        print(f"File created: {OUTPUT_FILE}")
+        print(
+            "data.json created successfully."
+        )
+
 
     except Exception as e:
 
-        print(f"Error writing data file: {e}")
+        print(
+            "Error creating data.json:",
+            e
+        )
 
+
+    # ========================================================
+    # FINAL SUMMARY
+    # ========================================================
+
+    print()
+    print("=" * 70)
+    print("PROCESS COMPLETED")
+    print("=" * 70)
+
+    print(
+        "Stocks processed:",
+        len(summary_results)
+    )
+
+    print(
+        "Total transactions:",
+        len(all_transactions)
+    )
+
+    print(
+        "Output file:",
+        OUTPUT_FILE
+    )
+
+    print()
+
+    print(
+        "SORTING:",
+        "20 Day High Away % - MOST NEAR FIRST"
+    )
+
+    print()
+
+
+# ============================================================
+# RUN
+# ============================================================
 
 if __name__ == "__main__":
+
     main()
