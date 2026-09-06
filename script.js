@@ -6,21 +6,36 @@ async function loadData() {
     try {
 
         const response = await fetch(
-            "data.json?timestamp=" + new Date().getTime()
+            "./data.json?v=" +
+            new Date().getTime()
         );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load data.json"
+            );
+
+        }
+
 
         const data = await response.json();
 
-        stockList = data.stocks;
+
+        stockList = data.stocks || [];
+
 
         document.getElementById(
             "totalStocks"
-        ).innerText = data.total_stocks;
+        ).innerText = data.total_stocks || 0;
 
 
         document.getElementById(
             "lastUpdated"
-        ).innerText = data.last_updated;
+        ).innerText =
+            data.last_updated ||
+            "Not Available";
 
 
         displayStocks(stockList);
@@ -35,15 +50,15 @@ async function loadData() {
             "stockData"
         ).innerHTML = `
 
-            <tr>
+        <tr>
 
-                <td colspan="6">
+            <td colspan="8">
 
-                    Error loading stock data.
+                Error loading stock data.
 
-                </td>
+            </td>
 
-            </tr>
+        </tr>
 
         `;
 
@@ -58,102 +73,189 @@ function displayStocks(stocks) {
         "stockData"
     );
 
+
     tableBody.innerHTML = "";
+
+
+    if (stocks.length === 0) {
+
+        tableBody.innerHTML = `
+
+        <tr>
+
+            <td colspan="8">
+
+                No stock data available.
+
+            </td>
+
+        </tr>
+
+        `;
+
+        return;
+
+    }
 
 
     stocks.forEach(stock => {
 
         let rowClass = "";
 
-        if (stock.percent_from_high >= -1) {
+
+        // Colour based on distance from 20-day high
+
+        if (stock.away_percent >= -1) {
 
             rowClass = "very-near";
 
         }
 
-        else if (stock.percent_from_high >= -3) {
+        else if (stock.away_percent >= -3) {
 
             rowClass = "near-high";
 
         }
 
-        else if (stock.percent_from_high <= -10) {
+        else if (stock.away_percent <= -10) {
 
             rowClass = "far-high";
 
         }
 
 
-        const row = `
+        const row = document.createElement(
+            "tr"
+        );
 
-            <tr class="${rowClass}">
 
-                <td>
+        row.className = rowClass;
+
+
+        row.innerHTML = `
+
+            <td>
+
+                <strong>
                     ${stock.symbol}
-                </td>
+                </strong>
 
-                <td>
-                    ${stock.company}
-                </td>
+            </td>
 
-                <td>
-                    ₹ ${stock.latest_close}
-                </td>
 
-                <td>
-                    ₹ ${stock.high_20_day}
-                </td>
+            <td>
 
-                <td>
-                    ${stock.high_date}
-                </td>
+                ${stock.company}
 
-                <td>
-                    ${stock.percent_from_high}%
-                </td>
+            </td>
 
-            </tr>
+
+            <td>
+
+                ₹ ${stock.yesterday_close}
+
+            </td>
+
+
+            <td>
+
+                ₹ ${stock.high_20_day}
+
+            </td>
+
+
+            <td>
+
+                ${stock.away_percent}%
+
+            </td>
+
+
+            <td>
+
+                ${stock.target_yes}
+
+            </td>
+
+
+            <td>
+
+                ${stock.target_no}
+
+            </td>
+
+
+            <td>
+
+                <strong>
+
+                    ${stock.strike_rate}%
+
+                </strong>
+
+            </td>
 
         `;
 
 
-        tableBody.innerHTML += row;
+        tableBody.appendChild(row);
 
     });
 
 }
 
 
-document.getElementById(
-    "searchBox"
-).addEventListener(
-    "keyup",
-    function() {
+document.addEventListener(
 
-        const searchText =
-            this.value.toLowerCase();
+    "DOMContentLoaded",
+
+    function () {
 
 
-        const filteredStocks =
-            stockList.filter(stock =>
-
-                stock.symbol
-                    .toLowerCase()
-                    .includes(searchText)
-
-                ||
-
-                stock.company
-                    .toLowerCase()
-                    .includes(searchText)
-
-            );
+        const searchBox = document.getElementById(
+            "searchBox"
+        );
 
 
-        displayStocks(filteredStocks);
+        searchBox.addEventListener(
+
+            "input",
+
+            function () {
+
+
+                const searchText =
+                    this.value.toLowerCase();
+
+
+                const filteredStocks =
+
+                    stockList.filter(stock =>
+
+                        stock.symbol
+                            .toLowerCase()
+                            .includes(searchText)
+
+                        ||
+
+                        stock.company
+                            .toLowerCase()
+                            .includes(searchText)
+
+                    );
+
+
+                displayStocks(
+                    filteredStocks
+                );
+
+            }
+
+        );
+
+
+        loadData();
 
     }
+
 );
-
-
-loadData();
