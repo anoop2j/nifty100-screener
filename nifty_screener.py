@@ -1,35 +1,20 @@
-import pandas as pd
-import yfinance as yf
-import json
-import time
-from datetime import datetime
-from zoneinfo import ZoneInfo
+import pandas as pd 
+import yfinance as yf 
+import json import time from datetime 
+import datetime from zoneinfo 
+import ZoneInfo
 
-# =========================================================
-
-# CONFIGURATION
-
-# =========================================================
-
-SYMBOL_FILE = "nifty100_symbols.csv"
-OUTPUT_FILE = "data.json"
-
-LOOKBACK_DAYS = 20
-TARGET_PERCENT = 6
-
-# Number of trading days approximately equal to one year
-
+=========================================================
+CONFIGURATION
+=========================================================
+SYMBOL_FILE = “nifty100_symbols.csv” OUTPUT_FILE = “data.json”
+LOOKBACK_DAYS = 20 TARGET_PERCENT = 6
+Number of trading days approximately equal to one year
 ANALYSIS_TRADING_DAYS = 252
-
-# =========================================================
-
-# DOWNLOAD STOCK DATA
-
-# =========================================================
-
+=========================================================
+DOWNLOAD STOCK DATA
+=========================================================
 def download_stock_data(symbol):
-
-```
 try:
 
     yahoo_symbol = symbol + ".NS"
@@ -75,17 +60,10 @@ except Exception as e:
     )
 
     return None
-```
-
-# =========================================================
-
-# CURRENT MARKET VALUES
-
-# =========================================================
-
+=========================================================
+CURRENT MARKET VALUES
+=========================================================
 def calculate_current_values(df):
-
-```
 recent_df = df.tail(
     LOOKBACK_DAYS
 )
@@ -126,17 +104,10 @@ return {
             2
         )
 }
-```
-
-# =========================================================
-
-# CHECK IF CURRENT DAY CREATES A NEW 20-DAY LOW
-
-# =========================================================
-
+=========================================================
+CHECK IF CURRENT DAY CREATES A NEW 20-DAY LOW
+=========================================================
 def is_new_20_day_low(df, index):
-
-```
 """
 A new 20-day low occurs when today's Low is lower than
 every Low during the previous 20 trading days.
@@ -159,17 +130,10 @@ current_low = (
 )
 
 return current_low < previous_20_day_low
-```
-
-# =========================================================
-
-# ANALYSE 20-DAY BREAKOUTS FOR LAST ONE YEAR
-
-# =========================================================
-
+=========================================================
+ANALYSE 20-DAY BREAKOUTS FOR LAST ONE YEAR
+=========================================================
 def analyse_breakouts(df):
-
-```
 """
 STRATEGY LOGIC
 
@@ -388,17 +352,10 @@ return {
             2
         )
 }
-```
-
-# =========================================================
-
-# PROCESS ONE STOCK
-
-# =========================================================
-
+=========================================================
+PROCESS ONE STOCK
+=========================================================
 def process_stock(symbol, company):
-
-```
 try:
 
     df = download_stock_data(symbol)
@@ -486,17 +443,10 @@ except Exception as e:
     )
 
     return None
-```
-
-# =========================================================
-
-# MAIN PROGRAM
-
-# =========================================================
-
+=========================================================
+MAIN PROGRAM
+=========================================================
 def main():
-
-```
 print()
 print("=" * 70)
 print("NIFTY 100 BREAKOUT SCREENER")
@@ -686,15 +636,8 @@ print(
 )
 
 print()
-```
-
-# =========================================================
-
-# START PROGRAM
-
-# =========================================================
-
-if **name** == "**main**":
-
+=========================================================
+START PROGRAM
+=========================================================
+if name == “main”:
 main()
-
