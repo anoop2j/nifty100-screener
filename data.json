@@ -1,21 +1,111 @@
 {
-  "updated": "2026-10-29 08:09:24",
+  "updated": "2026-10-30 08:17:34",
   "stocks": [
     {
-      "Stock Code": "BOSCHLTD",
-      "Yesterday Close": 47625.0,
-      "20 Day High": 47625.0,
+      "Stock Code": "ADANIPORTS",
+      "Yesterday Close": 1872.0,
+      "20 Day High": 1872.0,
       "20 Day High Away %": 0.0,
+      "Target Met Yes": 1,
+      "Target Met No": 4,
+      "Pending": 1,
+      "Strike Rate": 20.0
+    },
+    {
+      "Stock Code": "TATACONSUM",
+      "Yesterday Close": 1021.0,
+      "20 Day High": 1022.0,
+      "20 Day High Away %": 0.1,
+      "Target Met Yes": 1,
+      "Target Met No": 2,
+      "Pending": 1,
+      "Strike Rate": 33.33
+    },
+    {
+      "Stock Code": "BANKBARODA",
+      "Yesterday Close": 241.31,
+      "20 Day High": 241.6,
+      "20 Day High Away %": 0.12,
+      "Target Met Yes": 1,
+      "Target Met No": 3,
+      "Pending": 2,
+      "Strike Rate": 25.0
+    },
+    {
+      "Stock Code": "BOSCHLTD",
+      "Yesterday Close": 47565.0,
+      "20 Day High": 47625.0,
+      "20 Day High Away %": 0.13,
       "Target Met Yes": 4,
       "Target Met No": 0,
       "Pending": 0,
       "Strike Rate": 100.0
     },
     {
+      "Stock Code": "DLF",
+      "Yesterday Close": 694.35,
+      "20 Day High": 696.0,
+      "20 Day High Away %": 0.24,
+      "Target Met Yes": 2,
+      "Target Met No": 2,
+      "Pending": 2,
+      "Strike Rate": 50.0
+    },
+    {
+      "Stock Code": "KOTAKBANK",
+      "Yesterday Close": 459.0,
+      "20 Day High": 460.2,
+      "20 Day High Away %": 0.26,
+      "Target Met Yes": 3,
+      "Target Met No": 2,
+      "Pending": 0,
+      "Strike Rate": 60.0
+    },
+    {
+      "Stock Code": "BHARTIARTL",
+      "Yesterday Close": 1972.1,
+      "20 Day High": 1978.8,
+      "20 Day High Away %": 0.34,
+      "Target Met Yes": 1,
+      "Target Met No": 3,
+      "Pending": 3,
+      "Strike Rate": 25.0
+    },
+    {
+      "Stock Code": "ULTRACEMCO",
+      "Yesterday Close": 11175.0,
+      "20 Day High": 11219.0,
+      "20 Day High Away %": 0.39,
+      "Target Met Yes": 1,
+      "Target Met No": 2,
+      "Pending": 1,
+      "Strike Rate": 33.33
+    },
+    {
+      "Stock Code": "ETERNAL",
+      "Yesterday Close": 337.85,
+      "20 Day High": 339.35,
+      "20 Day High Away %": 0.44,
+      "Target Met Yes": 2,
+      "Target Met No": 4,
+      "Pending": 1,
+      "Strike Rate": 33.33
+    },
+    {
+      "Stock Code": "UNIONBANK",
+      "Yesterday Close": 186.5,
+      "20 Day High": 187.5,
+      "20 Day High Away %": 0.53,
+      "Target Met Yes": 3,
+      "Target Met No": 2,
+      "Pending": 3,
+      "Strike Rate": 60.0
+    },
+    {
       "Stock Code": "DRREDDY",
-      "Yesterday Close": 1335.4,
-      "20 Day High": 1338.2,
-      "20 Day High Away %": 0.21,
+      "Yesterday Close": 1345.0,
+      "20 Day High": 1352.8,
+      "20 Day High Away %": 0.58,
       "Target Met Yes": 2,
       "Target Met No": 2,
       "Pending": 0,
@@ -23,33 +113,43 @@
     },
     {
       "Stock Code": "TVSMOTOR",
-      "Yesterday Close": 4239.9,
-      "20 Day High": 4258.0,
-      "20 Day High Away %": 0.43,
+      "Yesterday Close": 4280.0,
+      "20 Day High": 4308.1,
+      "20 Day High Away %": 0.65,
       "Target Met Yes": 2,
       "Target Met No": 3,
-      "Pending": 1,
+      "Pending": 2,
       "Strike Rate": 40.0
     },
     {
-      "Stock Code": "ULTRACEMCO",
-      "Yesterday Close": 11104.0,
-      "20 Day High": 11219.0,
-      "20 Day High Away %": 1.03,
+      "Stock Code": "POWERGRID",
+      "Yesterday Close": 260.0,
+      "20 Day High": 262.5,
+      "20 Day High Away %": 0.95,
       "Target Met Yes": 1,
-      "Target Met No": 2,
-      "Pending": 1,
-      "Strike Rate": 33.33
+      "Target Met No": 4,
+      "Pending": 0,
+      "Strike Rate": 20.0
     },
     {
-      "Stock Code": "TATACONSUM",
-      "Yesterday Close": 1000.0,
-      "20 Day High": 1011.2,
-      "20 Day High Away %": 1.11,
+      "Stock Code": "PNB",
+      "Yesterday Close": 123.9,
+      "20 Day High": 125.22,
+      "20 Day High Away %": 1.05,
+      "Target Met Yes": 3,
+      "Target Met No": 3,
+      "Pending": 2,
+      "Strike Rate": 50.0
+    },
+    {
+      "Stock Code": "SBIN",
+      "Yesterday Close": 971.9,
+      "20 Day High": 983.8,
+      "20 Day High Away %": 1.21,
       "Target Met Yes": 1,
-      "Target Met No": 2,
+      "Target Met No": 3,
       "Pending": 0,
-      "Strike Rate": 33.33
+      "Strike Rate": 25.0
     },
     {
       "Stock Code": "INDHOTEL",
@@ -62,94 +162,104 @@
       "Strike Rate": 40.0
     },
     {
-      "Stock Code": "BHARTIARTL",
-      "Yesterday Close": 1948.1,
-      "20 Day High": 1978.8,
-      "20 Day High Away %": 1.55,
-      "Target Met Yes": 1,
-      "Target Met No": 3,
-      "Pending": 3,
-      "Strike Rate": 25.0
-    },
-    {
       "Stock Code": "DIVISLAB",
-      "Yesterday Close": 9505.5,
-      "20 Day High": 9660.0,
-      "20 Day High Away %": 1.6,
+      "Yesterday Close": 9558.5,
+      "20 Day High": 9699.5,
+      "20 Day High Away %": 1.45,
       "Target Met Yes": 2,
       "Target Met No": 3,
-      "Pending": 0,
+      "Pending": 1,
       "Strike Rate": 40.0
     },
     {
-      "Stock Code": "UNIONBANK",
-      "Yesterday Close": 182.98,
-      "20 Day High": 186.0,
-      "20 Day High Away %": 1.62,
-      "Target Met Yes": 3,
-      "Target Met No": 2,
-      "Pending": 2,
-      "Strike Rate": 60.0
-    },
-    {
-      "Stock Code": "ETERNAL",
-      "Yesterday Close": 326.0,
-      "20 Day High": 333.0,
-      "20 Day High Away %": 2.1,
-      "Target Met Yes": 2,
-      "Target Met No": 4,
-      "Pending": 0,
-      "Strike Rate": 33.33
-    },
-    {
-      "Stock Code": "MOTHERSON",
-      "Yesterday Close": 160.33,
-      "20 Day High": 164.1,
-      "20 Day High Away %": 2.3,
-      "Target Met Yes": 4,
-      "Target Met No": 0,
-      "Pending": 0,
-      "Strike Rate": 100.0
-    },
-    {
-      "Stock Code": "KOTAKBANK",
-      "Yesterday Close": 442.5,
-      "20 Day High": 453.1,
-      "20 Day High Away %": 2.34,
-      "Target Met Yes": 3,
-      "Target Met No": 3,
-      "Pending": 0,
-      "Strike Rate": 50.0
-    },
-    {
       "Stock Code": "LT",
-      "Yesterday Close": 3801.3,
+      "Yesterday Close": 3837.1,
       "20 Day High": 3894.0,
-      "20 Day High Away %": 2.38,
+      "20 Day High Away %": 1.46,
       "Target Met Yes": 3,
       "Target Met No": 1,
       "Pending": 1,
       "Strike Rate": 75.0
     },
     {
+      "Stock Code": "TATACAP",
+      "Yesterday Close": 326.35,
+      "20 Day High": 331.35,
+      "20 Day High Away %": 1.51,
+      "Target Met Yes": 3,
+      "Target Met No": 1,
+      "Pending": 0,
+      "Strike Rate": 75.0
+    },
+    {
       "Stock Code": "ICICIBANK",
-      "Yesterday Close": 1377.6,
+      "Yesterday Close": 1386.6,
       "20 Day High": 1411.8,
-      "20 Day High Away %": 2.42,
+      "20 Day High Away %": 1.78,
       "Target Met Yes": 1,
       "Target Met No": 4,
       "Pending": 3,
       "Strike Rate": 20.0
     },
     {
+      "Stock Code": "ITC",
+      "Yesterday Close": 265.0,
+      "20 Day High": 269.8,
+      "20 Day High Away %": 1.78,
+      "Target Met Yes": 0,
+      "Target Met No": 5,
+      "Pending": 0,
+      "Strike Rate": 0.0
+    },
+    {
       "Stock Code": "CIPLA",
-      "Yesterday Close": 1365.6,
-      "20 Day High": 1401.8,
-      "20 Day High Away %": 2.58,
+      "Yesterday Close": 1358.0,
+      "20 Day High": 1384.0,
+      "20 Day High Away %": 1.88,
       "Target Met Yes": 1,
       "Target Met No": 4,
       "Pending": 0,
       "Strike Rate": 20.0
+    },
+    {
+      "Stock Code": "CHOLAFIN",
+      "Yesterday Close": 1604.2,
+      "20 Day High": 1642.1,
+      "20 Day High Away %": 2.31,
+      "Target Met Yes": 2,
+      "Target Met No": 4,
+      "Pending": 0,
+      "Strike Rate": 33.33
+    },
+    {
+      "Stock Code": "ONGC",
+      "Yesterday Close": 225.79,
+      "20 Day High": 231.57,
+      "20 Day High Away %": 2.5,
+      "Target Met Yes": 1,
+      "Target Met No": 4,
+      "Pending": 0,
+      "Strike Rate": 20.0
+    },
+    {
+      "Stock Code": "MOTHERSON",
+      "Yesterday Close": 160.0,
+      "20 Day High": 164.1,
+      "20 Day High Away %": 2.5,
+      "Target Met Yes": 4,
+      "Target Met No": 0,
+      "Pending": 0,
+      "Strike Rate": 100.0
+    },
+    {
+      "Stock Code": "EICHERMOT",
+      "Yesterday Close": 7238.0,
+      "20 Day High": 7438.5,
+      "20 Day High Away %": 2.7,
+      "Target Met Yes": 2,
+      "Target Met No": 3,
+      "Pending": 0,
+      "Strike Rate": 40.0
     },
     {
       "Stock Code": "JSWSTEEL",
@@ -162,16 +272,6 @@
       "Strike Rate": 50.0
     },
     {
-      "Stock Code": "SBIN",
-      "Yesterday Close": 956.8,
-      "20 Day High": 983.8,
-      "20 Day High Away %": 2.74,
-      "Target Met Yes": 1,
-      "Target Met No": 3,
-      "Pending": 0,
-      "Strike Rate": 25.0
-    },
-    {
       "Stock Code": "SHREECEM",
       "Yesterday Close": 23020.0,
       "20 Day High": 23690.0,
@@ -182,64 +282,44 @@
       "Strike Rate": 25.0
     },
     {
-      "Stock Code": "DLF",
-      "Yesterday Close": 666.3,
-      "20 Day High": 685.85,
-      "20 Day High Away %": 2.85,
-      "Target Met Yes": 2,
-      "Target Met No": 2,
-      "Pending": 1,
-      "Strike Rate": 50.0
-    },
-    {
-      "Stock Code": "ONGC",
-      "Yesterday Close": 224.89,
-      "20 Day High": 231.7,
-      "20 Day High Away %": 2.94,
-      "Target Met Yes": 1,
-      "Target Met No": 4,
-      "Pending": 0,
-      "Strike Rate": 20.0
-    },
-    {
-      "Stock Code": "TRENT",
-      "Yesterday Close": 2913.9,
-      "20 Day High": 3004.7,
-      "20 Day High Away %": 3.02,
-      "Target Met Yes": 2,
-      "Target Met No": 3,
-      "Pending": 5,
-      "Strike Rate": 40.0
-    },
-    {
       "Stock Code": "HAL",
-      "Yesterday Close": 4850.0,
+      "Yesterday Close": 4869.9,
       "20 Day High": 5012.0,
-      "20 Day High Away %": 3.23,
+      "20 Day High Away %": 2.84,
       "Target Met Yes": 2,
       "Target Met No": 2,
       "Pending": 4,
       "Strike Rate": 50.0
     },
     {
-      "Stock Code": "ADANIPORTS",
-      "Yesterday Close": 1761.3,
-      "20 Day High": 1822.0,
-      "20 Day High Away %": 3.33,
+      "Stock Code": "M&M",
+      "Yesterday Close": 2890.0,
+      "20 Day High": 2986.0,
+      "20 Day High Away %": 3.22,
       "Target Met Yes": 1,
       "Target Met No": 4,
       "Pending": 0,
       "Strike Rate": 20.0
     },
     {
-      "Stock Code": "EICHERMOT",
-      "Yesterday Close": 7165.0,
-      "20 Day High": 7438.5,
-      "20 Day High Away %": 3.68,
-      "Target Met Yes": 2,
-      "Target Met No": 3,
+      "Stock Code": "HINDUNILVR",
+      "Yesterday Close": 1858.2,
+      "20 Day High": 1926.8,
+      "20 Day High Away %": 3.56,
+      "Target Met Yes": 1,
+      "Target Met No": 5,
       "Pending": 0,
-      "Strike Rate": 40.0
+      "Strike Rate": 16.67
+    },
+    {
+      "Stock Code": "WIPRO",
+      "Yesterday Close": 190.1,
+      "20 Day High": 197.25,
+      "20 Day High Away %": 3.62,
+      "Target Met Yes": 3,
+      "Target Met No": 2,
+      "Pending": 0,
+      "Strike Rate": 60.0
     },
     {
       "Stock Code": "TECHM",
@@ -252,60 +332,40 @@
       "Strike Rate": 80.0
     },
     {
-      "Stock Code": "BANKBARODA",
-      "Yesterday Close": 231.82,
-      "20 Day High": 240.99,
-      "20 Day High Away %": 3.81,
-      "Target Met Yes": 1,
-      "Target Met No": 3,
-      "Pending": 1,
-      "Strike Rate": 25.0
-    },
-    {
-      "Stock Code": "ITC",
-      "Yesterday Close": 259.5,
-      "20 Day High": 269.8,
-      "20 Day High Away %": 3.82,
-      "Target Met Yes": 0,
-      "Target Met No": 5,
-      "Pending": 0,
-      "Strike Rate": 0.0
-    },
-    {
-      "Stock Code": "PNB",
-      "Yesterday Close": 120.31,
-      "20 Day High": 125.22,
-      "20 Day High Away %": 3.92,
-      "Target Met Yes": 3,
-      "Target Met No": 3,
-      "Pending": 2,
-      "Strike Rate": 50.0
-    },
-    {
-      "Stock Code": "M&M",
-      "Yesterday Close": 2869.9,
-      "20 Day High": 2991.0,
-      "20 Day High Away %": 4.05,
-      "Target Met Yes": 1,
-      "Target Met No": 4,
-      "Pending": 0,
-      "Strike Rate": 20.0
-    },
-    {
       "Stock Code": "IOC",
-      "Yesterday Close": 130.15,
+      "Yesterday Close": 130.41,
       "20 Day High": 135.99,
-      "20 Day High Away %": 4.29,
+      "20 Day High Away %": 4.1,
       "Target Met Yes": 2,
       "Target Met No": 2,
       "Pending": 0,
       "Strike Rate": 50.0
     },
     {
+      "Stock Code": "NTPC",
+      "Yesterday Close": 310.5,
+      "20 Day High": 324.3,
+      "20 Day High Away %": 4.26,
+      "Target Met Yes": 1,
+      "Target Met No": 2,
+      "Pending": 0,
+      "Strike Rate": 33.33
+    },
+    {
+      "Stock Code": "INFY",
+      "Yesterday Close": 1146.5,
+      "20 Day High": 1197.8,
+      "20 Day High Away %": 4.28,
+      "Target Met Yes": 3,
+      "Target Met No": 2,
+      "Pending": 0,
+      "Strike Rate": 60.0
+    },
+    {
       "Stock Code": "HCLTECH",
-      "Yesterday Close": 1400.5,
+      "Yesterday Close": 1403.9,
       "20 Day High": 1467.5,
-      "20 Day High Away %": 4.57,
+      "20 Day High Away %": 4.33,
       "Target Met Yes": 3,
       "Target Met No": 3,
       "Pending": 0,
@@ -322,10 +382,40 @@
       "Strike Rate": 16.67
     },
     {
-      "Stock Code": "SBILIFE",
-      "Yesterday Close": 1666.7,
-      "20 Day High": 1754.3,
-      "20 Day High Away %": 4.99,
+      "Stock Code": "GODREJCP",
+      "Yesterday Close": 837.0,
+      "20 Day High": 877.35,
+      "20 Day High Away %": 4.6,
+      "Target Met Yes": 2,
+      "Target Met No": 2,
+      "Pending": 0,
+      "Strike Rate": 50.0
+    },
+    {
+      "Stock Code": "SOLARINDS",
+      "Yesterday Close": 19430.0,
+      "20 Day High": 20398.0,
+      "20 Day High Away %": 4.75,
+      "Target Met Yes": 3,
+      "Target Met No": 1,
+      "Pending": 0,
+      "Strike Rate": 75.0
+    },
+    {
+      "Stock Code": "TRENT",
+      "Yesterday Close": 2861.7,
+      "20 Day High": 3004.7,
+      "20 Day High Away %": 4.76,
+      "Target Met Yes": 2,
+      "Target Met No": 3,
+      "Pending": 5,
+      "Strike Rate": 40.0
+    },
+    {
+      "Stock Code": "TATAPOWER",
+      "Yesterday Close": 344.55,
+      "20 Day High": 362.05,
+      "20 Day High Away %": 4.83,
       "Target Met Yes": 1,
       "Target Met No": 3,
       "Pending": 0,
@@ -342,54 +432,124 @@
       "Strike Rate": 33.33
     },
     {
-      "Stock Code": "MARUTI",
-      "Yesterday Close": 11450.0,
-      "20 Day High": 12116.0,
-      "20 Day High Away %": 5.5,
+      "Stock Code": "ADANIGREEN",
+      "Yesterday Close": 1307.0,
+      "20 Day High": 1377.8,
+      "20 Day High Away %": 5.14,
       "Target Met Yes": 2,
       "Target Met No": 2,
       "Pending": 0,
       "Strike Rate": 50.0
     },
     {
-      "Stock Code": "GODREJCP",
-      "Yesterday Close": 828.8,
-      "20 Day High": 877.35,
-      "20 Day High Away %": 5.53,
-      "Target Met Yes": 2,
-      "Target Met No": 2,
-      "Pending": 0,
-      "Strike Rate": 50.0
-    },
-    {
-      "Stock Code": "SOLARINDS",
-      "Yesterday Close": 19270.0,
-      "20 Day High": 20398.0,
-      "20 Day High Away %": 5.53,
+      "Stock Code": "BAJAJ-AUTO",
+      "Yesterday Close": 10383.0,
+      "20 Day High": 10953.0,
+      "20 Day High Away %": 5.2,
       "Target Met Yes": 3,
       "Target Met No": 1,
       "Pending": 0,
       "Strike Rate": 75.0
     },
     {
+      "Stock Code": "CANBK",
+      "Yesterday Close": 119.79,
+      "20 Day High": 126.47,
+      "20 Day High Away %": 5.28,
+      "Target Met Yes": 1,
+      "Target Met No": 4,
+      "Pending": 0,
+      "Strike Rate": 20.0
+    },
+    {
+      "Stock Code": "ASIANPAINT",
+      "Yesterday Close": 2302.0,
+      "20 Day High": 2430.5,
+      "20 Day High Away %": 5.29,
+      "Target Met Yes": 2,
+      "Target Met No": 2,
+      "Pending": 0,
+      "Strike Rate": 50.0
+    },
+    {
+      "Stock Code": "APOLLOHOSP",
+      "Yesterday Close": 8200.0,
+      "20 Day High": 8659.0,
+      "20 Day High Away %": 5.3,
+      "Target Met Yes": 2,
+      "Target Met No": 3,
+      "Pending": 0,
+      "Strike Rate": 40.0
+    },
+    {
+      "Stock Code": "MARUTI",
+      "Yesterday Close": 11426.0,
+      "20 Day High": 12065.0,
+      "20 Day High Away %": 5.3,
+      "Target Met Yes": 2,
+      "Target Met No": 2,
+      "Pending": 0,
+      "Strike Rate": 50.0
+    },
+    {
       "Stock Code": "AXISBANK",
-      "Yesterday Close": 1220.0,
+      "Yesterday Close": 1225.0,
       "20 Day High": 1293.8,
-      "20 Day High Away %": 5.7,
+      "20 Day High Away %": 5.32,
       "Target Met Yes": 2,
       "Target Met No": 3,
       "Pending": 4,
       "Strike Rate": 40.0
     },
     {
-      "Stock Code": "HINDUNILVR",
-      "Yesterday Close": 1815.8,
-      "20 Day High": 1926.8,
-      "20 Day High Away %": 5.76,
+      "Stock Code": "BEL",
+      "Yesterday Close": 370.0,
+      "20 Day High": 391.0,
+      "20 Day High Away %": 5.37,
       "Target Met Yes": 1,
-      "Target Met No": 5,
+      "Target Met No": 4,
       "Pending": 0,
-      "Strike Rate": 16.67
+      "Strike Rate": 20.0
+    },
+    {
+      "Stock Code": "RELIANCE",
+      "Yesterday Close": 1167.4,
+      "20 Day High": 1234.3,
+      "20 Day High Away %": 5.42,
+      "Target Met Yes": 1,
+      "Target Met No": 2,
+      "Pending": 0,
+      "Strike Rate": 33.33
+    },
+    {
+      "Stock Code": "TCS",
+      "Yesterday Close": 2478.0,
+      "20 Day High": 2625.0,
+      "20 Day High Away %": 5.6,
+      "Target Met Yes": 3,
+      "Target Met No": 2,
+      "Pending": 0,
+      "Strike Rate": 60.0
+    },
+    {
+      "Stock Code": "TITAN",
+      "Yesterday Close": 4434.0,
+      "20 Day High": 4698.0,
+      "20 Day High Away %": 5.62,
+      "Target Met Yes": 3,
+      "Target Met No": 2,
+      "Pending": 0,
+      "Strike Rate": 60.0
+    },
+    {
+      "Stock Code": "BAJFINANCE",
+      "Yesterday Close": 938.9,
+      "20 Day High": 995.8,
+      "20 Day High Away %": 5.71,
+      "Target Met Yes": 3,
+      "Target Met No": 1,
+      "Pending": 0,
+      "Strike Rate": 75.0
     },
     {
       "Stock Code": "SUNPHARMA",
@@ -402,14 +562,34 @@
       "Strike Rate": 100.0
     },
     {
-      "Stock Code": "CHOLAFIN",
-      "Yesterday Close": 1545.2,
-      "20 Day High": 1644.0,
-      "20 Day High Away %": 6.01,
-      "Target Met Yes": 2,
-      "Target Met No": 4,
+      "Stock Code": "AMBUJACEM",
+      "Yesterday Close": 354.7,
+      "20 Day High": 376.65,
+      "20 Day High Away %": 5.83,
+      "Target Met Yes": 0,
+      "Target Met No": 5,
       "Pending": 0,
-      "Strike Rate": 33.33
+      "Strike Rate": 0.0
+    },
+    {
+      "Stock Code": "SBILIFE",
+      "Yesterday Close": 1652.0,
+      "20 Day High": 1754.3,
+      "20 Day High Away %": 5.83,
+      "Target Met Yes": 1,
+      "Target Met No": 3,
+      "Pending": 0,
+      "Strike Rate": 25.0
+    },
+    {
+      "Stock Code": "RECLTD",
+      "Yesterday Close": 296.15,
+      "20 Day High": 314.95,
+      "20 Day High Away %": 5.97,
+      "Target Met Yes": 3,
+      "Target Met No": 0,
+      "Pending": 0,
+      "Strike Rate": 100.0
     },
     {
       "Stock Code": "BAJAJFINSV",
@@ -422,34 +602,14 @@
       "Strike Rate": 25.0
     },
     {
-      "Stock Code": "RELIANCE",
-      "Yesterday Close": 1158.0,
-      "20 Day High": 1234.3,
+      "Stock Code": "BPCL",
+      "Yesterday Close": 289.2,
+      "20 Day High": 308.25,
       "20 Day High Away %": 6.18,
       "Target Met Yes": 1,
-      "Target Met No": 2,
+      "Target Met No": 4,
       "Pending": 0,
-      "Strike Rate": 33.33
-    },
-    {
-      "Stock Code": "INFY",
-      "Yesterday Close": 1123.15,
-      "20 Day High": 1197.8,
-      "20 Day High Away %": 6.23,
-      "Target Met Yes": 3,
-      "Target Met No": 2,
-      "Pending": 0,
-      "Strike Rate": 60.0
-    },
-    {
-      "Stock Code": "TCS",
-      "Yesterday Close": 2460.0,
-      "20 Day High": 2625.0,
-      "20 Day High Away %": 6.29,
-      "Target Met Yes": 3,
-      "Target Met No": 2,
-      "Pending": 0,
-      "Strike Rate": 60.0
+      "Strike Rate": 20.0
     },
     {
       "Stock Code": "HDFCAMC",
@@ -462,74 +622,34 @@
       "Strike Rate": 33.33
     },
     {
-      "Stock Code": "WIPRO",
-      "Yesterday Close": 184.5,
-      "20 Day High": 197.25,
-      "20 Day High Away %": 6.46,
-      "Target Met Yes": 3,
-      "Target Met No": 2,
-      "Pending": 0,
-      "Strike Rate": 60.0
-    },
-    {
-      "Stock Code": "NTPC",
-      "Yesterday Close": 303.75,
-      "20 Day High": 325.0,
-      "20 Day High Away %": 6.54,
+      "Stock Code": "JIOFIN",
+      "Yesterday Close": 207.0,
+      "20 Day High": 221.4,
+      "20 Day High Away %": 6.5,
       "Target Met Yes": 1,
-      "Target Met No": 2,
+      "Target Met No": 3,
       "Pending": 0,
-      "Strike Rate": 33.33
+      "Strike Rate": 25.0
     },
     {
-      "Stock Code": "POWERGRID",
-      "Yesterday Close": 251.4,
-      "20 Day High": 269.2,
-      "20 Day High Away %": 6.61,
-      "Target Met Yes": 1,
-      "Target Met No": 4,
-      "Pending": 0,
-      "Strike Rate": 20.0
-    },
-    {
-      "Stock Code": "CANBK",
-      "Yesterday Close": 118.01,
-      "20 Day High": 126.47,
-      "20 Day High Away %": 6.69,
-      "Target Met Yes": 1,
-      "Target Met No": 4,
-      "Pending": 0,
-      "Strike Rate": 20.0
-    },
-    {
-      "Stock Code": "ASIANPAINT",
-      "Yesterday Close": 2277.0,
-      "20 Day High": 2441.6,
-      "20 Day High Away %": 6.74,
+      "Stock Code": "VBL",
+      "Yesterday Close": 414.8,
+      "20 Day High": 444.35,
+      "20 Day High Away %": 6.65,
       "Target Met Yes": 2,
       "Target Met No": 2,
       "Pending": 0,
       "Strike Rate": 50.0
     },
     {
-      "Stock Code": "HDFCBANK",
-      "Yesterday Close": 685.3,
-      "20 Day High": 734.9,
-      "20 Day High Away %": 6.75,
+      "Stock Code": "PIDILITIND",
+      "Yesterday Close": 1422.0,
+      "20 Day High": 1524.6,
+      "20 Day High Away %": 6.73,
       "Target Met Yes": 1,
-      "Target Met No": 2,
+      "Target Met No": 4,
       "Pending": 0,
-      "Strike Rate": 33.33
-    },
-    {
-      "Stock Code": "AMBUJACEM",
-      "Yesterday Close": 351.2,
-      "20 Day High": 376.65,
-      "20 Day High Away %": 6.76,
-      "Target Met Yes": 0,
-      "Target Met No": 5,
-      "Pending": 0,
-      "Strike Rate": 0.0
+      "Strike Rate": 20.0
     },
     {
       "Stock Code": "ADANIENSOL",
@@ -542,94 +662,94 @@
       "Strike Rate": 50.0
     },
     {
-      "Stock Code": "BPCL",
-      "Yesterday Close": 287.0,
-      "20 Day High": 308.25,
-      "20 Day High Away %": 6.89,
+      "Stock Code": "ADANIPOWER",
+      "Yesterday Close": 191.2,
+      "20 Day High": 205.43,
+      "20 Day High Away %": 6.93,
       "Target Met Yes": 1,
-      "Target Met No": 4,
-      "Pending": 0,
-      "Strike Rate": 20.0
-    },
-    {
-      "Stock Code": "BEL",
-      "Yesterday Close": 363.35,
-      "20 Day High": 391.0,
-      "20 Day High Away %": 7.07,
-      "Target Met Yes": 1,
-      "Target Met No": 4,
-      "Pending": 0,
-      "Strike Rate": 20.0
-    },
-    {
-      "Stock Code": "TATACAP",
-      "Yesterday Close": 309.3,
-      "20 Day High": 333.3,
-      "20 Day High Away %": 7.2,
-      "Target Met Yes": 3,
-      "Target Met No": 1,
-      "Pending": 0,
-      "Strike Rate": 75.0
-    },
-    {
-      "Stock Code": "HINDALCO",
-      "Yesterday Close": 893.75,
-      "20 Day High": 963.5,
-      "20 Day High Away %": 7.24,
-      "Target Met Yes": 3,
-      "Target Met No": 1,
-      "Pending": 0,
-      "Strike Rate": 75.0
-    },
-    {
-      "Stock Code": "JIOFIN",
-      "Yesterday Close": 205.15,
-      "20 Day High": 221.4,
-      "20 Day High Away %": 7.34,
-      "Target Met Yes": 1,
-      "Target Met No": 3,
-      "Pending": 0,
-      "Strike Rate": 25.0
-    },
-    {
-      "Stock Code": "TATAPOWER",
-      "Yesterday Close": 335.0,
-      "20 Day High": 362.05,
-      "20 Day High Away %": 7.47,
-      "Target Met Yes": 1,
-      "Target Met No": 3,
-      "Pending": 0,
-      "Strike Rate": 25.0
-    },
-    {
-      "Stock Code": "BAJAJ-AUTO",
-      "Yesterday Close": 10390.0,
-      "20 Day High": 11270.0,
-      "20 Day High Away %": 7.81,
-      "Target Met Yes": 3,
       "Target Met No": 2,
       "Pending": 0,
-      "Strike Rate": 60.0
+      "Strike Rate": 33.33
     },
     {
-      "Stock Code": "BAJFINANCE",
-      "Yesterday Close": 917.25,
-      "20 Day High": 995.8,
-      "20 Day High Away %": 7.89,
+      "Stock Code": "CUMMINSIND",
+      "Yesterday Close": 4620.0,
+      "20 Day High": 4964.3,
+      "20 Day High Away %": 6.94,
       "Target Met Yes": 3,
-      "Target Met No": 1,
+      "Target Met No": 0,
       "Pending": 0,
-      "Strike Rate": 75.0
+      "Strike Rate": 100.0
     },
     {
-      "Stock Code": "ADANIGREEN",
-      "Yesterday Close": 1269.0,
-      "20 Day High": 1377.8,
-      "20 Day High Away %": 7.9,
+      "Stock Code": "HDFCBANK",
+      "Yesterday Close": 683.3,
+      "20 Day High": 734.9,
+      "20 Day High Away %": 7.02,
+      "Target Met Yes": 1,
+      "Target Met No": 2,
+      "Pending": 0,
+      "Strike Rate": 33.33
+    },
+    {
+      "Stock Code": "IRFC",
+      "Yesterday Close": 75.71,
+      "20 Day High": 81.5,
+      "20 Day High Away %": 7.1,
       "Target Met Yes": 2,
       "Target Met No": 2,
       "Pending": 0,
       "Strike Rate": 50.0
+    },
+    {
+      "Stock Code": "LTM",
+      "Yesterday Close": 4094.7,
+      "20 Day High": 4419.5,
+      "20 Day High Away %": 7.35,
+      "Target Met Yes": 3,
+      "Target Met No": 1,
+      "Pending": 1,
+      "Strike Rate": 75.0
+    },
+    {
+      "Stock Code": "HINDALCO",
+      "Yesterday Close": 886.3,
+      "20 Day High": 956.8,
+      "20 Day High Away %": 7.37,
+      "Target Met Yes": 3,
+      "Target Met No": 1,
+      "Pending": 0,
+      "Strike Rate": 75.0
+    },
+    {
+      "Stock Code": "JINDALSTEL",
+      "Yesterday Close": 1060.0,
+      "20 Day High": 1144.3,
+      "20 Day High Away %": 7.37,
+      "Target Met Yes": 3,
+      "Target Met No": 1,
+      "Pending": 0,
+      "Strike Rate": 75.0
+    },
+    {
+      "Stock Code": "INDIGO",
+      "Yesterday Close": 4690.0,
+      "20 Day High": 5069.5,
+      "20 Day High Away %": 7.49,
+      "Target Met Yes": 1,
+      "Target Met No": 6,
+      "Pending": 0,
+      "Strike Rate": 14.29
+    },
+    {
+      "Stock Code": "HYUNDAI",
+      "Yesterday Close": 1922.0,
+      "20 Day High": 2084.6,
+      "20 Day High Away %": 7.8,
+      "Target Met Yes": 1,
+      "Target Met No": 3,
+      "Pending": 0,
+      "Strike Rate": 25.0
     },
     {
       "Stock Code": "TORNTPHARM",
@@ -642,144 +762,64 @@
       "Strike Rate": 100.0
     },
     {
-      "Stock Code": "RECLTD",
-      "Yesterday Close": 290.0,
-      "20 Day High": 314.95,
-      "20 Day High Away %": 7.92,
-      "Target Met Yes": 3,
-      "Target Met No": 0,
-      "Pending": 0,
-      "Strike Rate": 100.0
-    },
-    {
-      "Stock Code": "COALINDIA",
-      "Yesterday Close": 398.0,
-      "20 Day High": 432.9,
-      "20 Day High Away %": 8.06,
-      "Target Met Yes": 2,
-      "Target Met No": 4,
-      "Pending": 0,
-      "Strike Rate": 33.33
-    },
-    {
-      "Stock Code": "BRITANNIA",
-      "Yesterday Close": 4560.0,
-      "20 Day High": 4964.0,
-      "20 Day High Away %": 8.14,
+      "Stock Code": "GRASIM",
+      "Yesterday Close": 2900.0,
+      "20 Day High": 3151.5,
+      "20 Day High Away %": 7.98,
       "Target Met Yes": 1,
       "Target Met No": 4,
       "Pending": 0,
       "Strike Rate": 20.0
     },
     {
-      "Stock Code": "LTM",
-      "Yesterday Close": 4059.7,
-      "20 Day High": 4419.5,
-      "20 Day High Away %": 8.14,
-      "Target Met Yes": 3,
-      "Target Met No": 1,
-      "Pending": 1,
-      "Strike Rate": 75.0
-    },
-    {
-      "Stock Code": "BAJAJHLDNG",
-      "Yesterday Close": 10461.0,
-      "20 Day High": 11420.0,
-      "20 Day High Away %": 8.4,
-      "Target Met Yes": 2,
+      "Stock Code": "BRITANNIA",
+      "Yesterday Close": 4567.3,
+      "20 Day High": 4964.0,
+      "20 Day High Away %": 7.99,
+      "Target Met Yes": 1,
       "Target Met No": 4,
       "Pending": 0,
-      "Strike Rate": 33.33
+      "Strike Rate": 20.0
     },
     {
-      "Stock Code": "IRFC",
-      "Yesterday Close": 74.63,
-      "20 Day High": 81.5,
-      "20 Day High Away %": 8.43,
+      "Stock Code": "PFC",
+      "Yesterday Close": 320.6,
+      "20 Day High": 349.5,
+      "20 Day High Away %": 8.27,
       "Target Met Yes": 2,
       "Target Met No": 2,
       "Pending": 0,
       "Strike Rate": 50.0
     },
     {
-      "Stock Code": "JINDALSTEL",
-      "Yesterday Close": 1060.0,
-      "20 Day High": 1160.0,
-      "20 Day High Away %": 8.62,
-      "Target Met Yes": 3,
-      "Target Met No": 1,
-      "Pending": 0,
-      "Strike Rate": 75.0
-    },
-    {
-      "Stock Code": "APOLLOHOSP",
-      "Yesterday Close": 8137.0,
-      "20 Day High": 8906.0,
-      "20 Day High Away %": 8.63,
+      "Stock Code": "TMPV",
+      "Yesterday Close": 266.0,
+      "20 Day High": 290.4,
+      "20 Day High Away %": 8.4,
       "Target Met Yes": 2,
       "Target Met No": 3,
       "Pending": 0,
       "Strike Rate": 40.0
     },
     {
-      "Stock Code": "CUMMINSIND",
-      "Yesterday Close": 4532.0,
-      "20 Day High": 4964.3,
-      "20 Day High Away %": 8.71,
-      "Target Met Yes": 3,
-      "Target Met No": 0,
+      "Stock Code": "HDFCLIFE",
+      "Yesterday Close": 517.0,
+      "20 Day High": 565.85,
+      "20 Day High Away %": 8.63,
+      "Target Met Yes": 0,
+      "Target Met No": 5,
       "Pending": 0,
-      "Strike Rate": 100.0
+      "Strike Rate": 0.0
     },
     {
       "Stock Code": "TMCV",
-      "Yesterday Close": 399.7,
+      "Yesterday Close": 400.3,
       "20 Day High": 438.15,
-      "20 Day High Away %": 8.78,
+      "20 Day High Away %": 8.64,
       "Target Met Yes": 3,
       "Target Met No": 1,
       "Pending": 0,
       "Strike Rate": 75.0
-    },
-    {
-      "Stock Code": "PIDILITIND",
-      "Yesterday Close": 1389.6,
-      "20 Day High": 1524.6,
-      "20 Day High Away %": 8.85,
-      "Target Met Yes": 1,
-      "Target Met No": 4,
-      "Pending": 0,
-      "Strike Rate": 20.0
-    },
-    {
-      "Stock Code": "CGPOWER",
-      "Yesterday Close": 832.3,
-      "20 Day High": 913.3,
-      "20 Day High Away %": 8.87,
-      "Target Met Yes": 2,
-      "Target Met No": 1,
-      "Pending": 0,
-      "Strike Rate": 66.67
-    },
-    {
-      "Stock Code": "GRASIM",
-      "Yesterday Close": 2900.8,
-      "20 Day High": 3186.0,
-      "20 Day High Away %": 8.95,
-      "Target Met Yes": 1,
-      "Target Met No": 4,
-      "Pending": 0,
-      "Strike Rate": 20.0
-    },
-    {
-      "Stock Code": "VBL",
-      "Yesterday Close": 404.5,
-      "20 Day High": 444.35,
-      "20 Day High Away %": 8.97,
-      "Target Met Yes": 2,
-      "Target Met No": 2,
-      "Pending": 0,
-      "Strike Rate": 50.0
     },
     {
       "Stock Code": "ABB",
@@ -792,104 +832,114 @@
       "Strike Rate": 66.67
     },
     {
-      "Stock Code": "HDFCLIFE",
-      "Yesterday Close": 514.1,
-      "20 Day High": 565.85,
-      "20 Day High Away %": 9.15,
-      "Target Met Yes": 0,
-      "Target Met No": 5,
-      "Pending": 0,
-      "Strike Rate": 0.0
-    },
-    {
-      "Stock Code": "TMPV",
-      "Yesterday Close": 263.6,
-      "20 Day High": 290.4,
-      "20 Day High Away %": 9.23,
+      "Stock Code": "CGPOWER",
+      "Yesterday Close": 829.8,
+      "20 Day High": 913.3,
+      "20 Day High Away %": 9.14,
       "Target Met Yes": 2,
-      "Target Met No": 3,
-      "Pending": 0,
-      "Strike Rate": 40.0
-    },
-    {
-      "Stock Code": "INDIGO",
-      "Yesterday Close": 4596.5,
-      "20 Day High": 5069.5,
-      "20 Day High Away %": 9.33,
-      "Target Met Yes": 1,
-      "Target Met No": 6,
-      "Pending": 0,
-      "Strike Rate": 14.29
-    },
-    {
-      "Stock Code": "PFC",
-      "Yesterday Close": 316.4,
-      "20 Day High": 349.5,
-      "20 Day High Away %": 9.47,
-      "Target Met Yes": 2,
-      "Target Met No": 2,
-      "Pending": 0,
-      "Strike Rate": 50.0
-    },
-    {
-      "Stock Code": "ADANIPOWER",
-      "Yesterday Close": 184.59,
-      "20 Day High": 205.43,
-      "20 Day High Away %": 10.14,
-      "Target Met Yes": 1,
-      "Target Met No": 2,
-      "Pending": 0,
-      "Strike Rate": 33.33
-    },
-    {
-      "Stock Code": "TITAN",
-      "Yesterday Close": 4365.9,
-      "20 Day High": 4881.0,
-      "20 Day High Away %": 10.55,
-      "Target Met Yes": 4,
       "Target Met No": 1,
       "Pending": 0,
-      "Strike Rate": 80.0
+      "Strike Rate": 66.67
     },
     {
-      "Stock Code": "TATASTEEL",
-      "Yesterday Close": 169.27,
-      "20 Day High": 189.55,
-      "20 Day High Away %": 10.7,
+      "Stock Code": "COALINDIA",
+      "Yesterday Close": 393.1,
+      "20 Day High": 432.9,
+      "20 Day High Away %": 9.19,
       "Target Met Yes": 2,
       "Target Met No": 4,
       "Pending": 0,
       "Strike Rate": 33.33
     },
     {
-      "Stock Code": "HYUNDAI",
-      "Yesterday Close": 1866.9,
-      "20 Day High": 2100.0,
-      "20 Day High Away %": 11.1,
-      "Target Met Yes": 1,
-      "Target Met No": 3,
-      "Pending": 0,
-      "Strike Rate": 25.0
-    },
-    {
       "Stock Code": "HINDZINC",
-      "Yesterday Close": 506.8,
-      "20 Day High": 576.55,
-      "20 Day High Away %": 12.1,
+      "Yesterday Close": 516.5,
+      "20 Day High": 575.05,
+      "20 Day High Away %": 10.18,
       "Target Met Yes": 3,
       "Target Met No": 0,
       "Pending": 0,
       "Strike Rate": 100.0
     },
     {
+      "Stock Code": "MUTHOOTFIN",
+      "Yesterday Close": 2497.1,
+      "20 Day High": 2783.9,
+      "20 Day High Away %": 10.3,
+      "Target Met Yes": 1,
+      "Target Met No": 2,
+      "Pending": 0,
+      "Strike Rate": 33.33
+    },
+    {
+      "Stock Code": "TATASTEEL",
+      "Yesterday Close": 169.46,
+      "20 Day High": 189.55,
+      "20 Day High Away %": 10.6,
+      "Target Met Yes": 2,
+      "Target Met No": 4,
+      "Pending": 0,
+      "Strike Rate": 33.33
+    },
+    {
+      "Stock Code": "BAJAJHLDNG",
+      "Yesterday Close": 10160.0,
+      "20 Day High": 11420.0,
+      "20 Day High Away %": 11.03,
+      "Target Met Yes": 2,
+      "Target Met No": 4,
+      "Pending": 0,
+      "Strike Rate": 33.33
+    },
+    {
+      "Stock Code": "LODHA",
+      "Yesterday Close": 1007.1,
+      "20 Day High": 1141.9,
+      "20 Day High Away %": 11.8,
+      "Target Met Yes": 2,
+      "Target Met No": 3,
+      "Pending": 0,
+      "Strike Rate": 40.0
+    },
+    {
+      "Stock Code": "ADANIENT",
+      "Yesterday Close": 2607.9,
+      "20 Day High": 2957.6,
+      "20 Day High Away %": 11.82,
+      "Target Met Yes": 1,
+      "Target Met No": 3,
+      "Pending": 0,
+      "Strike Rate": 25.0
+    },
+    {
       "Stock Code": "VEDL",
-      "Yesterday Close": 233.05,
+      "Yesterday Close": 234.55,
       "20 Day High": 267.7,
-      "20 Day High Away %": 12.94,
+      "20 Day High Away %": 12.38,
       "Target Met Yes": 2,
       "Target Met No": 1,
       "Pending": 0,
       "Strike Rate": 66.67
+    },
+    {
+      "Stock Code": "SIEMENS",
+      "Yesterday Close": 3366.0,
+      "20 Day High": 3859.6,
+      "20 Day High Away %": 12.79,
+      "Target Met Yes": 4,
+      "Target Met No": 1,
+      "Pending": 0,
+      "Strike Rate": 80.0
+    },
+    {
+      "Stock Code": "MAXHEALTH",
+      "Yesterday Close": 851.15,
+      "20 Day High": 976.3,
+      "20 Day High Away %": 12.82,
+      "Target Met Yes": 2,
+      "Target Met No": 3,
+      "Pending": 0,
+      "Strike Rate": 40.0
     },
     {
       "Stock Code": "UNITDSPR",
@@ -902,34 +952,14 @@
       "Strike Rate": 50.0
     },
     {
-      "Stock Code": "LODHA",
-      "Yesterday Close": 1010.4,
-      "20 Day High": 1165.0,
-      "20 Day High Away %": 13.27,
-      "Target Met Yes": 2,
-      "Target Met No": 3,
-      "Pending": 0,
-      "Strike Rate": 40.0
-    },
-    {
-      "Stock Code": "SIEMENS",
-      "Yesterday Close": 3339.5,
-      "20 Day High": 3862.7,
-      "20 Day High Away %": 13.54,
+      "Stock Code": "SHRIRAMFIN",
+      "Yesterday Close": 841.1,
+      "20 Day High": 990.6,
+      "20 Day High Away %": 15.09,
       "Target Met Yes": 4,
       "Target Met No": 1,
       "Pending": 0,
       "Strike Rate": 80.0
-    },
-    {
-      "Stock Code": "MUTHOOTFIN",
-      "Yesterday Close": 2392.7,
-      "20 Day High": 2783.9,
-      "20 Day High Away %": 14.05,
-      "Target Met Yes": 1,
-      "Target Met No": 2,
-      "Pending": 0,
-      "Strike Rate": 33.33
     },
     {
       "Stock Code": "NESTLEIND",
@@ -942,26 +972,6 @@
       "Strike Rate": 50.0
     },
     {
-      "Stock Code": "SHRIRAMFIN",
-      "Yesterday Close": 832.55,
-      "20 Day High": 990.6,
-      "20 Day High Away %": 15.95,
-      "Target Met Yes": 4,
-      "Target Met No": 1,
-      "Pending": 0,
-      "Strike Rate": 80.0
-    },
-    {
-      "Stock Code": "ADANIENT",
-      "Yesterday Close": 2479.8,
-      "20 Day High": 2972.9,
-      "20 Day High Away %": 16.59,
-      "Target Met Yes": 1,
-      "Target Met No": 3,
-      "Pending": 0,
-      "Strike Rate": 25.0
-    },
-    {
       "Stock Code": "ENRIN",
       "Yesterday Close": 2840.0,
       "20 Day High": 3408.9,
@@ -972,20 +982,10 @@
       "Strike Rate": 40.0
     },
     {
-      "Stock Code": "MAXHEALTH",
-      "Yesterday Close": 845.0,
-      "20 Day High": 1015.8,
-      "20 Day High Away %": 16.81,
-      "Target Met Yes": 2,
-      "Target Met No": 3,
-      "Pending": 0,
-      "Strike Rate": 40.0
-    },
-    {
       "Stock Code": "MAZDOCK",
-      "Yesterday Close": 1732.8,
+      "Yesterday Close": 1762.7,
       "20 Day High": 2145.0,
-      "20 Day High Away %": 19.22,
+      "20 Day High Away %": 17.82,
       "Target Met Yes": 2,
       "Target Met No": 2,
       "Pending": 0,
@@ -993,9 +993,9 @@
     },
     {
       "Stock Code": "DMART",
-      "Yesterday Close": 3133.9,
+      "Yesterday Close": 3175.0,
       "20 Day High": 3880.0,
-      "20 Day High Away %": 19.23,
+      "20 Day High Away %": 18.17,
       "Target Met Yes": 1,
       "Target Met No": 4,
       "Pending": 0,
